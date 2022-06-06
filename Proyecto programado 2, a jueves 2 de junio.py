@@ -43,11 +43,13 @@ def ingresoEquipos (event):
         entEquipoAModificar = tk.Entry(
             winVentana5, fg="White", bg="Black", width=15)
         entEquipoAModificar.place(x=125, y=55)
-        btnModificarEquipo = tk.Button(
+        btnProcesarEquipo = tk.Button(
             winVentana5, text="ELIMINAR", bg="#926359", fg="#FFFFFF")
-        btnModificarEquipo.place(x=25, y=75)
+        btnProcesarEquipo.place(x=25, y=75)
+        btnProcesarEquipo.bind("<Button-1>", procesarEquipoAEliminar)
 
-        def procesarEquipoAEliminar():
+
+        def procesarEquipoAEliminar(event):
             equipoAEliminar = entNombreEquipo.get()
             equipos = estadoActual["equipos"]
             codigo = estadoActual["codigo"]
