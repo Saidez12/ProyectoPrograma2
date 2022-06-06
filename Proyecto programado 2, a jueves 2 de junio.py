@@ -1,7 +1,7 @@
-# Proyecto programado 2, a sábado 28 de mayo
+# Proyecto programado 2, a lunes 6 de junio
 # Rubén David Abarca Ramírez - 2022017072
 # Saimon Hernández Venegas - 2022090508
-# Daniel Rubén Arce Madriz -2022200437
+# Daniel Ruben Arce Madriz - 2022200437
 
 
 from asyncio.windows_events import NULL
@@ -10,6 +10,7 @@ import pickle
 from tkinter import *
 from tkinter import messagebox
 from typing import Any, Hashable,Iterable,Optional
+import random
 
 cantidadEquiposVentana = tk.Tk()
 
@@ -26,6 +27,54 @@ def ingresoEquipos (event):
     x = cantidadEquiposVentana.winfo_x()
     y = cantidadEquiposVentana.winfo_y()
     infoEquiposVentana.geometry("+%d+%d" % (x+75, y+75))
+
+    def eliminarEquipo(event):
+        winVentana5= tk.Toplevel(cantidadEquiposVentana)
+        winVentana5.resizable(False, False)
+        winVentana5.geometry("375x125")
+        winVentana5.title("Modificar un equipo")
+        x = 100
+        y = 200
+        winVentana5.geometry("+%d+%d" % (x+75, y+75))
+        winVentana5.protocol("WM_DELETE_WINDOW", on_closing)
+        #winVentana4.withdraw()
+        lblEquipoAModificar = tk.Label(
+            winVentana5, text="Indique el nombre del equipo que desea eliminar: ")
+        lblEquipoAModificar.place(x=10, y=25)
+        entEquipoAModificar = tk.Entry(
+            winVentana5, fg="White", bg="Black", width=15)
+        entEquipoAModificar.place(x=125, y=55)
+        btnProcesarEquipo = tk.Button(
+            winVentana5, text="ELIMINAR", bg="#926359", fg="#FFFFFF")
+        btnProcesarEquipo.place(x=25, y=75)
+        btnProcesarEquipo.bind("<Button-1>", procesarEquipoAEliminar)
+
+
+        def procesarEquipoAEliminar(event):
+            equipoAEliminar = entNombreEquipo.get()
+            equipos = estadoActual["equipos"]
+            codigo = estadoActual["codigo"]
+            tableroDePuntosAnotados = {}
+            if (equipoAEliminar in tableroDePuntosAnotados == True):
+                estadoActual["equipos"] = equipos
+                for y in range(len(equipos)):
+                    codigo = y
+                    equipoEliminar=list(equipos[codigo].values())
+                    equipo = equipoEliminar[2]
+                    if(equipo == equipoAEliminar):
+                        print(equipos[codigo])
+                        estadoActual["equipoActual"] = equipos[codigo]
+                        estadoActual["codigo"] = codigo
+                        equipos[codigo].clear()
+                        messagebox.showinfo(message="El equipo se ha eliminado")
+                        intermedio()
+                        break
+                    else:
+                        continue
+            else:
+                messagebox.showinfo(message="Debe ingresar un equipo que se encuentre en el tablero de punto anotados")
+
+
 
     def obtenerYGuardar():
         cantidadJugadores = int(entCantidadJugadores.get())
@@ -63,12 +112,12 @@ def ingresoEquipos (event):
             pickle.dump(equipos,fp)
         with open("data.json","rb") as fp:
             data = pickle.load(fp)
-        print(data)
+        print(equipos)
 
     def intermedio():
         winVentana3= tk.Toplevel(infoEquiposVentana)
         winVentana3.resizable(False, False)
-        winVentana3.geometry("300x150")
+        winVentana3.geometry("285x175")
         winVentana3.title("Modificar un equipo")
         x = infoEquiposVentana.winfo_x()
         y = infoEquiposVentana.winfo_y()
@@ -86,7 +135,11 @@ def ingresoEquipos (event):
         btnModificar.place(x=25, y=75)
         btnModificar.bind("<Button-1>", modificarDiccionario)
         btnIniciar.place(x=125, y=75)
-        #btnIniciar.bind("<Button-1>", campeonato)
+        btnEliminarEquipo= tk.Button(
+            winVentana3, text="ELIMINAR EQUIPO", bg="#926359", fg="#FFFFFF")
+        btnEliminarEquipo.place(x=82, y=125)
+        btnEliminarEquipo.bind("<Button-1>", eliminarEquipo)
+        btnIniciar.bind("<Button-1>", matrizEquipos)
 
     def almacenarModificaciones():
         codigo = estadoActual["codigo"]
@@ -182,6 +235,91 @@ def ingresoEquipos (event):
         entLugarProcedencia.insert(0, equipoActual["Lugar de procedencia"])
         entCantidadJugadores.insert(0, equipoActual["Cantidad de jugadores"])
         btnContinuarIngreso.bind("<Button-1>", editarEquipo)
+
+
+def puntajeAletorio(): 
+    return random.randint(0,150)
+
+def matrizEquipos(event):
+    equiposDic = estadoActual["equipos"][2]
+    inicio = 1000
+    EquiposT = [[""]]
+    for equipos in range(len(equiposDic)):
+        inicio+=1
+        EquiposT[0].append([equiposDic[inicio]]) 
+        EquiposT.append([equiposDic[inicio], puntajeAletorio(), puntajeAletorio(), puntajeAletorio(), puntajeAletorio(), puntajeAletorio(), puntajeAletorio()])
+
+    class Table:
+        def __init__(self, root):
+            puntoEquipo = []
+            dataPorEquipo = []
+            for iFila in range(total_rows):
+                dataPorEquipo = []
+                for iColumna in range(total_columns):
+                    self.e = Entry(root, width=15, fg='black',
+                                    font=('Arial', 12, 'bold'))
+                    self.e.grid(row=iFila, column=iColumna)
+                    if iFila != iColumna:
+                        self.e.insert(END, lst[iFila][iColumna])
+                        if iFila != 0:
+                            dataPorEquipo.append(lst[iFila][iColumna])
+                    else:
+                        if iFila == 0 and iColumna == 0:
+                            self.e.insert(END, "")
+                        else:
+                            self.e.insert(END, -1)
+                            dataPorEquipo.append(-1)        
+                puntoEquipo.append(dataPorEquipo)
+            puntoEquipo = puntoEquipo[1:]
+    
+    lst = EquiposT
+    total_rows = len(lst)
+    total_columns = len(lst[0])
+    t = Table(cantidadEquiposVentana)
+
+
+def puntosTotales(puntoEquipo):
+    puntosPorEquipo = []
+    puntosFinales = []
+    for equipo in range(len(puntoEquipo)):
+        puntosTotales = 0
+        for posicion in range(len(puntoEquipo[0])):
+            if type(puntoEquipo[equipo][posicion]) == int:
+                if puntoEquipo[equipo][posicion] > 0:
+                    puntosTotales += puntoEquipo[equipo][posicion]
+            else:
+                puntosPorEquipo.append(puntoEquipo[equipo][posicion])
+        puntosPorEquipo.append(puntosTotales)
+        puntosFinales.append(puntosPorEquipo)
+        
+def puntosTablas(puntoEquipo):      
+    listaDeClasificacion = []
+    indiceColumnaDato = 0
+    for fila in range(len(puntoEquipo)):
+        listaPorEquipo = []
+        indiceColumnaDato += 1
+        sumaDeClasificacion = 0
+        indiceFilaDato = 0
+        partidosGanados = 0
+        partidosPerdidos = 0
+        for columna in range(len(puntoEquipo[0])):
+            if type(puntoEquipo[fila][columna]) == str:
+                listaPorEquipo.append(puntoEquipo[fila][columna])
+            else:
+                if puntoEquipo[fila][columna] == -1:
+                    continue
+                if indiceFilaDato == fila:
+                    indiceFilaDato+=1
+                if puntoEquipo[fila][columna] > puntoEquipo[indiceFilaDato][indiceColumnaDato]:
+                    sumaDeClasificacion += 3
+                    partidosGanados += 1
+                elif puntoEquipo[fila][columna] < puntoEquipo[indiceFilaDato][indiceColumnaDato]:
+                    partidosPerdidos += 1
+                elif puntoEquipo[fila][columna] == puntoEquipo[indiceFilaDato][indiceColumnaDato]:
+                    sumaDeClasificacion += 1
+                indiceFilaDato += 1
+        listaPorEquipo.append(sumaDeClasificacion)
+        listaDeClasificacion.append(listaPorEquipo)
 
 
 def on_closing():
