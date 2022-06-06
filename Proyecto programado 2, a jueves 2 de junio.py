@@ -10,6 +10,7 @@ import pickle
 from tkinter import *
 from tkinter import messagebox
 from typing import Any, Hashable,Iterable,Optional
+import random
 
 cantidadEquiposVentana = tk.Tk()
 
@@ -111,7 +112,7 @@ def ingresoEquipos (event):
             pickle.dump(equipos,fp)
         with open("data.json","rb") as fp:
             data = pickle.load(fp)
-        print(data)
+        print(equipos)
 
     def intermedio():
         winVentana3= tk.Toplevel(infoEquiposVentana)
@@ -138,7 +139,7 @@ def ingresoEquipos (event):
             winVentana3, text="ELIMINAR EQUIPO", bg="#926359", fg="#FFFFFF")
         btnEliminarEquipo.place(x=82, y=125)
         btnEliminarEquipo.bind("<Button-1>", eliminarEquipo)
-        #btnIniciar.bind("<Button-1>", campeonato)
+        btnIniciar.bind("<Button-1>", matrizEquipos)
 
     def almacenarModificaciones():
         codigo = estadoActual["codigo"]
@@ -234,6 +235,91 @@ def ingresoEquipos (event):
         entLugarProcedencia.insert(0, equipoActual["Lugar de procedencia"])
         entCantidadJugadores.insert(0, equipoActual["Cantidad de jugadores"])
         btnContinuarIngreso.bind("<Button-1>", editarEquipo)
+
+
+def puntajeAletorio(): 
+    return random.randint(0,150)
+
+def matrizEquipos(event):
+    equiposDic = estadoActual["equipos"][2]
+    inicio = 1000
+    EquiposT = [[""]]
+    for equipos in range(len(equiposDic)):
+        inicio+=1
+        EquiposT[0].append([equiposDic[inicio]]) 
+        EquiposT.append([equiposDic[inicio], puntajeAletorio(), puntajeAletorio(), puntajeAletorio(), puntajeAletorio(), puntajeAletorio(), puntajeAletorio()])
+
+    class Table:
+        def __init__(self, root):
+            puntoEquipo = []
+            dataPorEquipo = []
+            for iFila in range(total_rows):
+                dataPorEquipo = []
+                for iColumna in range(total_columns):
+                    self.e = Entry(root, width=15, fg='black',
+                                    font=('Arial', 12, 'bold'))
+                    self.e.grid(row=iFila, column=iColumna)
+                    if iFila != iColumna:
+                        self.e.insert(END, lst[iFila][iColumna])
+                        if iFila != 0:
+                            dataPorEquipo.append(lst[iFila][iColumna])
+                    else:
+                        if iFila == 0 and iColumna == 0:
+                            self.e.insert(END, "")
+                        else:
+                            self.e.insert(END, -1)
+                            dataPorEquipo.append(-1)        
+                puntoEquipo.append(dataPorEquipo)
+            puntoEquipo = puntoEquipo[1:]
+    
+    lst = EquiposT
+    total_rows = len(lst)
+    total_columns = len(lst[0])
+    t = Table(cantidadEquiposVentana)
+
+
+def puntosTotales(puntoEquipo):
+    puntosPorEquipo = []
+    puntosFinales = []
+    for equipo in range(len(puntoEquipo)):
+        puntosTotales = 0
+        for posicion in range(len(puntoEquipo[0])):
+            if type(puntoEquipo[equipo][posicion]) == int:
+                if puntoEquipo[equipo][posicion] > 0:
+                    puntosTotales += puntoEquipo[equipo][posicion]
+            else:
+                puntosPorEquipo.append(puntoEquipo[equipo][posicion])
+        puntosPorEquipo.append(puntosTotales)
+        puntosFinales.append(puntosPorEquipo)
+        
+def puntosTablas(puntoEquipo):      
+    listaDeClasificacion = []
+    indiceColumnaDato = 0
+    for fila in range(len(puntoEquipo)):
+        listaPorEquipo = []
+        indiceColumnaDato += 1
+        sumaDeClasificacion = 0
+        indiceFilaDato = 0
+        partidosGanados = 0
+        partidosPerdidos = 0
+        for columna in range(len(puntoEquipo[0])):
+            if type(puntoEquipo[fila][columna]) == str:
+                listaPorEquipo.append(puntoEquipo[fila][columna])
+            else:
+                if puntoEquipo[fila][columna] == -1:
+                    continue
+                if indiceFilaDato == fila:
+                    indiceFilaDato+=1
+                if puntoEquipo[fila][columna] > puntoEquipo[indiceFilaDato][indiceColumnaDato]:
+                    sumaDeClasificacion += 3
+                    partidosGanados += 1
+                elif puntoEquipo[fila][columna] < puntoEquipo[indiceFilaDato][indiceColumnaDato]:
+                    partidosPerdidos += 1
+                elif puntoEquipo[fila][columna] == puntoEquipo[indiceFilaDato][indiceColumnaDato]:
+                    sumaDeClasificacion += 1
+                indiceFilaDato += 1
+        listaPorEquipo.append(sumaDeClasificacion)
+        listaDeClasificacion.append(listaPorEquipo)
 
 
 def on_closing():
