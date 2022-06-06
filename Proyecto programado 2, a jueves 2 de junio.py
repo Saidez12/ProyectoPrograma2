@@ -1,4 +1,4 @@
-# Proyecto programado 2, a sábado 28 de mayo
+# Proyecto programado 2, a lunes 6 de junio
 # Rubén David Abarca Ramírez - 2022017072
 # Saimon Hernández Venegas - 2022090508
 # Daniel Rubén Arce Madriz -
@@ -26,6 +26,52 @@ def ingresoEquipos (event):
     x = cantidadEquiposVentana.winfo_x()
     y = cantidadEquiposVentana.winfo_y()
     infoEquiposVentana.geometry("+%d+%d" % (x+75, y+75))
+
+    def eliminarEquipo(event):
+        winVentana5= tk.Toplevel(cantidadEquiposVentana)
+        winVentana5.resizable(False, False)
+        winVentana5.geometry("375x125")
+        winVentana5.title("Modificar un equipo")
+        x = 100
+        y = 200
+        winVentana5.geometry("+%d+%d" % (x+75, y+75))
+        winVentana5.protocol("WM_DELETE_WINDOW", on_closing)
+        #winVentana4.withdraw()
+        lblEquipoAModificar = tk.Label(
+            winVentana5, text="Indique el nombre del equipo que desea eliminar: ")
+        lblEquipoAModificar.place(x=10, y=25)
+        entEquipoAModificar = tk.Entry(
+            winVentana5, fg="White", bg="Black", width=15)
+        entEquipoAModificar.place(x=125, y=55)
+        btnModificarEquipo = tk.Button(
+            winVentana5, text="ELIMINAR", bg="#926359", fg="#FFFFFF")
+        btnModificarEquipo.place(x=25, y=75)
+
+        def procesarEquipoAEliminar():
+            equipoAEliminar = entNombreEquipo.get()
+            equipos = estadoActual["equipos"]
+            codigo = estadoActual["codigo"]
+            tableroDePuntosAnotados = {}
+            if (equipoAEliminar in tableroDePuntosAnotados == True):
+                estadoActual["equipos"] = equipos
+                for y in range(len(equipos)):
+                    codigo = y
+                    equipoEliminar=list(equipos[codigo].values())
+                    equipo = equipoEliminar[2]
+                    if(equipo == equipoAEliminar):
+                        print(equipos[codigo])
+                        estadoActual["equipoActual"] = equipos[codigo]
+                        estadoActual["codigo"] = codigo
+                        equipos[codigo].clear()
+                        messagebox.showinfo(message="El equipo se ha eliminado")
+                        intermedio()
+                        break
+                    else:
+                        continue
+            else:
+                messagebox.showinfo(message="Debe ingresar un equipo que se encuentre en el tablero de punto anotados")
+
+
 
     def obtenerYGuardar():
         cantidadJugadores = int(entCantidadJugadores.get())
@@ -68,7 +114,7 @@ def ingresoEquipos (event):
     def intermedio():
         winVentana3= tk.Toplevel(infoEquiposVentana)
         winVentana3.resizable(False, False)
-        winVentana3.geometry("300x150")
+        winVentana3.geometry("285x175")
         winVentana3.title("Modificar un equipo")
         x = infoEquiposVentana.winfo_x()
         y = infoEquiposVentana.winfo_y()
@@ -86,6 +132,10 @@ def ingresoEquipos (event):
         btnModificar.place(x=25, y=75)
         btnModificar.bind("<Button-1>", modificarDiccionario)
         btnIniciar.place(x=125, y=75)
+        btnEliminarEquipo= tk.Button(
+            winVentana3, text="ELIMINAR EQUIPO", bg="#926359", fg="#FFFFFF")
+        btnEliminarEquipo.place(x=82, y=125)
+        btnEliminarEquipo.bind("<Button-1>", eliminarEquipo)
         #btnIniciar.bind("<Button-1>", campeonato)
 
     def almacenarModificaciones():
