@@ -137,11 +137,11 @@ def ingresoEquipos (event):
         btnIniciar.place(x=125, y=75)
         btnEliminarEquipo= tk.Button(
             winVentana3, text="ELIMINAR EQUIPO", bg="#926359", fg="#FFFFFF")
-        btnEliminarEquipo.place(x=75, y=125)
+        btnEliminarEquipo.place(x=25, y=125)
         btnEliminarEquipo.bind("<Button-1>", eliminarEquipo)
         btnTablaResultados= tk.Button(
             winVentana3, text="VER TABLA", bg="#926359", fg="#FFFFFF")
-        btnTablaResultados.place(x=115, y=125)
+        btnTablaResultados.place(x=125, y=125)
         #btnTablaResultados.bind("<Button-1>", tablaResultados)
         #btnIniciar.bind("<Button-1>", campeonato)
 
@@ -253,7 +253,15 @@ def matrizEquipos(event):
     y = 200
     winMatrizPuntos.geometry("+%d+%d" % (x+75, y+75))
     winMatrizPuntos.protocol("WM_DELETE_WINDOW", on_closing)
-    equiposDic = {1001: "Tiburones", 1002: "Trigres", 1003: "Perros", 1004: "Ratones"}
+    codigo = estadoActual["codigo"] 
+    estadoActual["equipos"] = equipos
+    equiposDic = {}
+    for y in range(len(equipos)):
+        codigo = y
+        equiposD=list(equipos[codigo].values())
+        nombreD = equiposD[2]
+        equiposDic[codigo] = {codigo:nombreD}
+    print(equiposDic)
     inicio = 1000
     EquiposT = [[""]]
     for equipos in range(len(equiposDic)):
