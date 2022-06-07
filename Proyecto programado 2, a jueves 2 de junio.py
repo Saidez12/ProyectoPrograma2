@@ -1,4 +1,4 @@
-# Proyecto programado 2, a lunes 6 de junio
+# Proyecto programado 2
 # Rubén David Abarca Ramírez - 2022017072
 # Saimon Hernández Venegas - 2022090508
 # Daniel Ruben Arce Madriz - 2022200437
