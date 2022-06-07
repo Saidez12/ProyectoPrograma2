@@ -285,6 +285,7 @@ def matrizEquipos(event):
     total_columns = len(lst[0])
     t = Table(winMatrizPuntos)
     cantidadEquiposVentana.mainloop()
+    
 
 def puntosTotales(puntoEquipo):
     puntosPorEquipo = []
