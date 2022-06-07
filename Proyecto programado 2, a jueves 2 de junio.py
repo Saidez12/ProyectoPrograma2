@@ -136,8 +136,12 @@ def ingresoEquipos (event):
         btnIniciar.place(x=125, y=75)
         btnEliminarEquipo= tk.Button(
             winVentana3, text="ELIMINAR EQUIPO", bg="#926359", fg="#FFFFFF")
-        btnEliminarEquipo.place(x=82, y=125)
+        btnEliminarEquipo.place(x=75, y=125)
         btnEliminarEquipo.bind("<Button-1>", eliminarEquipo)
+        btnTablaResultados= tk.Button(
+            winVentana3, text="VER TABLA", bg="#926359", fg="#FFFFFF")
+        btnTablaResultados.place(x=115, y=125)
+        #btnTablaResultados.bind("<Button-1>", tablaResultados)
         #btnIniciar.bind("<Button-1>", campeonato)
 
     def almacenarModificaciones():
