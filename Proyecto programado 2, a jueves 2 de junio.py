@@ -139,15 +139,11 @@ def ingresoEquipos (event):
             winVentana3, text="ELIMINAR EQUIPO", bg="#926359", fg="#FFFFFF")
         btnEliminarEquipo.place(x=75, y=125)
         btnEliminarEquipo.bind("<Button-1>", eliminarEquipo)
-<<<<<<< HEAD
         btnTablaResultados= tk.Button(
             winVentana3, text="VER TABLA", bg="#926359", fg="#FFFFFF")
         btnTablaResultados.place(x=115, y=125)
         #btnTablaResultados.bind("<Button-1>", tablaResultados)
         #btnIniciar.bind("<Button-1>", campeonato)
-=======
-        btnIniciar.bind("<Button-1>", matrizEquipos)
->>>>>>> 6fe1bf2a8a215826e5ba3c051b44812609748dd5
 
     def almacenarModificaciones():
         codigo = estadoActual["codigo"]
