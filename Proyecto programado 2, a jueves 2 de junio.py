@@ -129,7 +129,7 @@ def ingresoEquipos (event):
             winVentana3, text="Los equipos se han guardado satisfactoriamente")
         lblEquiposGuardados.place(x=15, y=25)
         btnIniciar = tk.Button(
-            winVentana3, text="INICIAR CAMPEONATO", bg="#926359", fg="#FFFFFF")
+            winVentana3, text="Tabla de puntos", bg="#926359", fg="#FFFFFF")
         btnModificar = tk.Button(
             winVentana3, text="MODIFICAR", bg="#926359", fg="#FFFFFF")
         btnModificar.place(x=25, y=75)
@@ -241,7 +241,15 @@ def puntajeAletorio():
     return random.randint(0,150)
 
 def matrizEquipos(event):
-    equiposDic = estadoActual["equipos"][2]
+    winMatrizPuntos = tk.Toplevel(cantidadEquiposVentana)
+    winMatrizPuntos.resizable(False, False)
+    winMatrizPuntos.geometry("750x325")
+    winMatrizPuntos.title("Modificar un equipo")
+    x = 100
+    y = 200
+    winMatrizPuntos.geometry("+%d+%d" % (x+75, y+75))
+    winMatrizPuntos.protocol("WM_DELETE_WINDOW", on_closing)
+    equiposDic = {1001: "Tiburones", 1002: "Trigres", 1003: "Perros", 1004: "Ratones"}
     inicio = 1000
     EquiposT = [[""]]
     for equipos in range(len(equiposDic)):
@@ -250,13 +258,13 @@ def matrizEquipos(event):
         EquiposT.append([equiposDic[inicio], puntajeAletorio(), puntajeAletorio(), puntajeAletorio(), puntajeAletorio(), puntajeAletorio(), puntajeAletorio()])
 
     class Table:
-        def __init__(self, root):
+        def __init__(self, winMatrizPuntos):
             puntoEquipo = []
             dataPorEquipo = []
             for iFila in range(total_rows):
                 dataPorEquipo = []
                 for iColumna in range(total_columns):
-                    self.e = Entry(root, width=15, fg='black',
+                    self.e = Entry(winMatrizPuntos, width=15, fg='black',
                                     font=('Arial', 12, 'bold'))
                     self.e.grid(row=iFila, column=iColumna)
                     if iFila != iColumna:
@@ -275,7 +283,8 @@ def matrizEquipos(event):
     lst = EquiposT
     total_rows = len(lst)
     total_columns = len(lst[0])
-    t = Table(cantidadEquiposVentana)
+    t = Table(winMatrizPuntos)
+    cantidadEquiposVentana.mainloop()
 
 
 def puntosTotales(puntoEquipo):
