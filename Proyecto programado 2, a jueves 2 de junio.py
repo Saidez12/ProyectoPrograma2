@@ -146,7 +146,7 @@ def ingresoEquipos (event):
         btnEliminarEquipo.bind("<Button-1>", eliminarEquipo)
         btnTablaResultados= tk.Button(
             winVentana3, text="VER TABLA", bg="#926359", fg="#FFFFFF")
-        btnTablaResultados.place(x=125, y=125)
+        btnTablaResultados.place(x=140, y=125)
         #btnTablaResultados.bind("<Button-1>", tablaResultados)
         #btnIniciar.bind("<Button-1>", campeonato)
 
