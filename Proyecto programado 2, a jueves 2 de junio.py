@@ -274,8 +274,7 @@ def matrizEquipos(event):
         codigo = y
         equiposD=list(equipos[codigo].values())
         nombreD = equiposD[2]
-        equiposDic[codigo] = {codigo:nombreD}
-    print(equiposDic)
+        equiposDic[codigo] = nombreD
     inicio = 1000
     EquiposT = [[""]]
     for equipos in range(len(equiposDic)):
