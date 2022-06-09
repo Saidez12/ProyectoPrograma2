@@ -260,7 +260,7 @@ def puntajeAletorio():
 def matrizEquipos(event):
     winMatrizPuntos = tk.Toplevel(cantidadEquiposVentana)
     winMatrizPuntos.resizable(False, False)
-    winMatrizPuntos.geometry("750x325")
+    winMatrizPuntos.geometry("1250x500")
     winMatrizPuntos.title("Modificar un equipo")
     x = 100
     y = 200
