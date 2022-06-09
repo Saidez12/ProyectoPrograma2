@@ -147,8 +147,7 @@ def ingresoEquipos (event):
         btnTablaResultados= tk.Button(
             winVentana3, text="VER TABLA", bg="#926359", fg="#FFFFFF")
         btnTablaResultados.place(x=140, y=125)
-        #btnTablaResultados.bind("<Button-1>", tablaResultados)
-        #btnIniciar.bind("<Button-1>", campeonato)
+        btnTablaResultados.bind("<Button-1>", matrizEquipos)
 
     def almacenarModificaciones():
         codigo = estadoActual["codigo"]
@@ -267,20 +266,20 @@ def matrizEquipos(event):
     y = 200
     winMatrizPuntos.geometry("+%d+%d" % (x+75, y+75))
     winMatrizPuntos.protocol("WM_DELETE_WINDOW", on_closing)
-    codigo = estadoActual["codigo"] 
-    estadoActual["equipos"] = equipos
     equiposDic = {}
-    for y in range(len(equipos)):
+    codigo = estadoActual["codigo"] 
+    equipos1 = estadoActual["equipos"]
+    for y in range(len(equipos1)):
         codigo = y
-        equiposD=list(equipos[codigo].values())
+        equiposD=list(equipos1[codigo].values())
         nombreD = equiposD[2]
         equiposDic[codigo] = nombreD
-    inicio = 1000
+    inicio = 0
     EquiposT = [[""]]
-    for equipos in range(len(equiposDic)):
-        inicio+=1
+    for x in range(len(equiposDic)):
         EquiposT[0].append([equiposDic[inicio]]) 
         EquiposT.append([equiposDic[inicio], puntajeAletorio(), puntajeAletorio(), puntajeAletorio(), puntajeAletorio(), puntajeAletorio(), puntajeAletorio()])
+        inicio+=1
 
     class Table:
         def __init__(self, winMatrizPuntos):
@@ -304,72 +303,58 @@ def matrizEquipos(event):
                             dataPorEquipo.append(-1)        
                 puntoEquipo.append(dataPorEquipo)
             puntoEquipo = puntoEquipo[1:]
+ 
     
+            def estadisticasTablas():  
+                    listaDeClasificacion = []
+                    indiceColumnaDato = 0
+                    for fila in range(len(puntoEquipo)):
+                        listaPorEquipo = []
+                        indiceColumnaDato += 1
+                        sumaDeClasificacion = 0
+                        indiceFilaDato = 0
+                        partidosGanados = 0
+                        partidosPerdidos = 0
+                        partidosEmpatados = 0
+                        totalPuntosAFavor = 0
+                        totalPuntosEnContra = 0
+                        totalDiferenciaDePuntos = 0
+                        for columna in range(len(puntoEquipo[0])):
+                            if type(puntoEquipo[fila][columna]) == str:
+                                listaPorEquipo.append(puntoEquipo[fila][columna])
+                            else:
+                                if puntoEquipo[fila][columna] == -1:
+                                    continue
+                                if indiceFilaDato == fila:
+                                    indiceFilaDato+=1
+                                if puntoEquipo[fila][columna] > puntoEquipo[indiceFilaDato][indiceColumnaDato]:
+                                    sumaDeClasificacion += 3
+                                    partidosGanados += 1
+                                elif puntoEquipo[fila][columna] < puntoEquipo[indiceFilaDato][indiceColumnaDato]:
+                                    partidosPerdidos += 1
+                                elif puntoEquipo[fila][columna] == puntoEquipo[indiceFilaDato][indiceColumnaDato]:
+                                    sumaDeClasificacion += 1
+                                    partidosEmpatados += 1
+                                indiceFilaDato += 1
+                                totalPuntosAFavor += puntoEquipo[fila][columna]
+                                if type(puntoEquipo[indiceFilaDato-1][indiceColumnaDato] ) == int:
+                                    totalPuntosEnContra += puntoEquipo[indiceFilaDato-1][indiceColumnaDato]    
+                        totalDiferenciaDePuntos = totalPuntosAFavor - totalPuntosEnContra
+                        listaPorEquipo.append(partidosGanados)
+                        listaPorEquipo.append(partidosEmpatados)
+                        listaPorEquipo.append(partidosPerdidos)
+                        listaPorEquipo.append(sumaDeClasificacion)
+                        listaPorEquipo.append(totalPuntosAFavor)
+                        listaPorEquipo.append(totalPuntosEnContra)
+                        listaPorEquipo.append(totalDiferenciaDePuntos)
+                        listaDeClasificacion.append(listaPorEquipo)
+                    return listaDeClasificacion
+        
     lst = EquiposT
     total_rows = len(lst)
     total_columns = len(lst[0])
     t = Table(winMatrizPuntos)
     cantidadEquiposVentana.mainloop()
-    
-
-def puntosTotales(puntoEquipo):
-    puntosPorEquipo = []
-    puntosFinales = []
-    for equipo in range(len(puntoEquipo)):
-        puntosTotales = 0
-        for posicion in range(len(puntoEquipo[0])):
-            if type(puntoEquipo[equipo][posicion]) == int:
-                if puntoEquipo[equipo][posicion] > 0:
-                    puntosTotales += puntoEquipo[equipo][posicion]
-            else:
-                puntosPorEquipo.append(puntoEquipo[equipo][posicion])
-        puntosPorEquipo.append(puntosTotales)
-        puntosFinales.append(puntosPorEquipo)
-        
-def estadisticasTablas(puntoEquipo):   
-        listaDeClasificacion = []
-        indiceColumnaDato = 0
-        for fila in range(len(puntoEquipo)):
-            listaPorEquipo = []
-            indiceColumnaDato += 1
-            sumaDeClasificacion = 0
-            indiceFilaDato = 0
-            partidosGanados = 0
-            partidosPerdidos = 0
-            partidosEmpatados = 0
-            totalPuntosAFavor = 0
-            totalPuntosEnContra = 0
-            totalDiferenciaDePuntos = 0
-            for columna in range(len(puntoEquipo[0])):
-                if type(puntoEquipo[fila][columna]) == str:
-                    listaPorEquipo.append(puntoEquipo[fila][columna])
-                else:
-                    if puntoEquipo[fila][columna] == -1:
-                        continue
-                    if indiceFilaDato == fila:
-                        indiceFilaDato+=1
-                    if puntoEquipo[fila][columna] > puntoEquipo[indiceFilaDato][indiceColumnaDato]:
-                        sumaDeClasificacion += 3
-                        partidosGanados += 1
-                    elif puntoEquipo[fila][columna] < puntoEquipo[indiceFilaDato][indiceColumnaDato]:
-                        partidosPerdidos += 1
-                    elif puntoEquipo[fila][columna] == puntoEquipo[indiceFilaDato][indiceColumnaDato]:
-                        sumaDeClasificacion += 1
-                        partidosEmpatados += 1
-                    indiceFilaDato += 1
-                    totalPuntosAFavor += puntoEquipo[fila][columna]
-                    if type(puntoEquipo[indiceFilaDato-1][indiceColumnaDato] ) == int:
-                        totalPuntosEnContra += puntoEquipo[indiceFilaDato-1][indiceColumnaDato]    
-            totalDiferenciaDePuntos = totalPuntosAFavor - totalPuntosEnContra
-            listaPorEquipo.append(partidosGanados)
-            listaPorEquipo.append(partidosEmpatados)
-            listaPorEquipo.append(partidosPerdidos)
-            listaPorEquipo.append(sumaDeClasificacion)
-            listaPorEquipo.append(totalPuntosAFavor)
-            listaPorEquipo.append(totalPuntosEnContra)
-            listaPorEquipo.append(totalDiferenciaDePuntos)
-            listaDeClasificacion.append(listaPorEquipo)
-        return listaDeClasificacion
 
 
 def on_closing():
