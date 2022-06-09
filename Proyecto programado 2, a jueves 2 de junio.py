@@ -139,14 +139,14 @@ def ingresoEquipos (event):
             winVentana3, text="MODIFICAR", bg="#926359", fg="#FFFFFF")
         btnModificar.place(x=25, y=75)
         btnModificar.bind("<Button-1>", modificarDiccionario)
-        btnIniciar.place(x=125, y=75)
+        btnIniciar.place(x=150, y=75)
         btnEliminarEquipo= tk.Button(
             winVentana3, text="ELIMINAR EQUIPO", bg="#926359", fg="#FFFFFF")
         btnEliminarEquipo.place(x=25, y=125)
         btnEliminarEquipo.bind("<Button-1>", eliminarEquipo)
         btnTablaResultados= tk.Button(
             winVentana3, text="VER TABLA", bg="#926359", fg="#FFFFFF")
-        btnTablaResultados.place(x=140, y=125)
+        btnTablaResultados.place(x=150, y=125)
         btnTablaResultados.bind("<Button-1>", matrizEquipos)
 
     def almacenarModificaciones():
@@ -261,7 +261,7 @@ def matrizEquipos(event):
     winMatrizPuntos = tk.Toplevel(cantidadEquiposVentana)
     winMatrizPuntos.resizable(False, False)
     winMatrizPuntos.geometry("1250x500")
-    winMatrizPuntos.title("Modificar un equipo")
+    winMatrizPuntos.title("Tabla de Resultados")
     x = 100
     y = 200
     winMatrizPuntos.geometry("+%d+%d" % (x+75, y+75))
@@ -280,6 +280,10 @@ def matrizEquipos(event):
         EquiposT[0].append([equiposDic[inicio]]) 
         EquiposT.append([equiposDic[inicio], puntajeAletorio(), puntajeAletorio(), puntajeAletorio(), puntajeAletorio(), puntajeAletorio(), puntajeAletorio()])
         inicio+=1
+    btnResultados= tk.Button(
+    cantidadEquiposVentana, text="RESULTADOS", bg="#926359", fg="#FFFFFF")
+    btnResultados.place(x=650, y=425)
+    #btnResultados.bind("<Button-1>", comando)
 
     class Table:
         def __init__(self, winMatrizPuntos):
@@ -348,7 +352,24 @@ def matrizEquipos(event):
                         listaPorEquipo.append(totalPuntosEnContra)
                         listaPorEquipo.append(totalDiferenciaDePuntos)
                         listaDeClasificacion.append(listaPorEquipo)
+                    estadoActual["listaDeClasificasion"] = listaDeClasificacion
                     return listaDeClasificacion
+
+        def cantidadEquiposAFinal():
+            winVentana6= tk.Toplevel(cantidadEquiposVentana)
+            winVentana6.resizable(False, False)
+            winVentana6.geometry("375x125")
+            winVentana6.title("Equipos a la final")
+            x = 100
+            y = 200
+            winVentana6.geometry("+%d+%d" % (x+75, y+75))
+            winVentana6.protocol("WM_DELETE_WINDOW", on_closing)
+            lblEquiposFinal = tk.Label(
+                winVentana6, text="Indique la cantidad de equipos que desea en la final ")
+            lblEquiposFinal.place(x=10, y=25)
+            entEquiposFinal = tk.Entry(
+                winVentana6, fg="White", bg="Black", width=15)
+            entEquiposFinal.place(x=125, y=55)
         
     lst = EquiposT
     total_rows = len(lst)
@@ -362,7 +383,7 @@ def on_closing():
         cantidadEquiposVentana.quit()
 
 
-estadoActual = {"indice" : -1,"equipos" : NULL, "equipoActual": NULL, "codigo": 0}
+estadoActual = {"indice" : -1,"equipos" : NULL, "equipoActual": NULL, "codigo": 0, "listaDeClasificacion" : NULL}
 
 
 cantidadEquiposVentana.title("Ingreso al campeonato")
