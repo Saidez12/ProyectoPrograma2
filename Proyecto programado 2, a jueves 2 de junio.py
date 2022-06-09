@@ -49,9 +49,11 @@ def ingresoEquipos (event):
         btnProcesarEquipo.place(x=25, y=75)
         btnProcesarEquipo.bind("<Button-1>", procesarEquipoAEliminar)
 
-
         def procesarEquipoAEliminar(event):
-            equipoAEliminar = entNombreEquipo.get()
+            try:
+                equipoAEliminar = entNombreEquipo.get()
+            except:
+                messagebox.showinfo(message="Indique parámetros válidos")
             equipos = estadoActual["equipos"]
             codigo = estadoActual["codigo"]
             tableroDePuntosAnotados = {}
@@ -77,10 +79,13 @@ def ingresoEquipos (event):
 
 
     def obtenerYGuardar():
-        cantidadJugadores = int(entCantidadJugadores.get())
+        try:
+            cantidadJugadores = int(entCantidadJugadores.get())
+            valorPlanilla = int(entValorPlanilla.get())
+        except:
+            messagebox.showinfo(message="Indique valores numéricos de índole entera")
         procedencia = entLugarProcedencia.get()
         nombre = entNombreEquipo.get()
-        valorPlanilla = int(entValorPlanilla.get())
         entCantidadJugadores.delete (0,"end")
         entLugarProcedencia.delete (0,"end")
         entNombreEquipo.delete (0,"end")
@@ -148,10 +153,13 @@ def ingresoEquipos (event):
     def almacenarModificaciones():
         codigo = estadoActual["codigo"]
         equipos = estadoActual["equipos"]
-        cantidadJugadores = int(entCantidadJugadores.get())
+        try:
+            cantidadJugadores = int(entCantidadJugadores.get())
+            valorPlanilla = int(entValorPlanilla.get())
+        except:
+            messagebox.showinfo(message="Indique valores numéricos de índole entero")
         procedencia = entLugarProcedencia.get()
         nombre = entNombreEquipo.get()
-        valorPlanilla = int(entValorPlanilla.get())
         equipos[codigo] = {"Cantidad de jugadores": cantidadJugadores, "Lugar de procedencia": procedencia, "Nombre del equipo": nombre, "Valor de la planilla":valorPlanilla}
         with open("data.json","wb") as fp:
             pickle.dump(equipos,fp)
@@ -181,11 +189,14 @@ def ingresoEquipos (event):
 
 
         def buscarEquipo (event):
-            nombreEquipoAModificar = entEquipoAModificar.get()
+            try:
+                nombreEquipoAModificar = entEquipoAModificar.get()
+            except:
+                messagebox.showinfo(message="Debe indicar parámetros válidos")
             estadoActual["equipos"] = equipos
             for y in range(len(equipos)):
                 codigo = y
-                equipoAModificar=list(equipos[codigo].values())
+                equipoAModificar = list(equipos[codigo].values())
                 equipo = equipoAModificar[2]
                 if(equipo == nombreEquipoAModificar):
                     print(equipos[codigo])
@@ -228,7 +239,10 @@ def ingresoEquipos (event):
     equipoActual  = estadoActual["equipoActual"]
 
     if(equipoActual == NULL):
-        cantidadEquipos = int(entCantidadEquipos.get())
+        try:
+            cantidadEquipos = int(entCantidadEquipos.get())
+        except:
+            messagebox.showinfo(message="Debe indicar un valor numérico de índole entero")
         equipos = {}
         estadoActual["equipos"] = equipos
         cantidadEquiposVentana.withdraw()
