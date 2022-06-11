@@ -276,7 +276,6 @@ def matrizEquipos(event):
         equiposDic[codigo] = nombreD
     inicio = 0
     equiposDic = estadoActual["equipos"]
-    inicio = 1
     EquiposT = [[""]]
     for x in range(len(equiposDic)):
         EquiposT[0].append([equiposDic[inicio]]) 
