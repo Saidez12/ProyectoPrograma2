@@ -134,7 +134,7 @@ def ingresoEquipos (event):
             winVentana3, text="Los equipos se han guardado satisfactoriamente")
         lblEquiposGuardados.place(x=15, y=25)
         btnIniciar = tk.Button(
-            winVentana3, text="Tabla de puntos", bg="#926359", fg="#FFFFFF")
+            winVentana3, text="Simulación de torneo", bg="#926359", fg="#FFFFFF")
         btnModificar = tk.Button(
             winVentana3, text="MODIFICAR", bg="#926359", fg="#FFFFFF")
         btnModificar.place(x=25, y=75)
