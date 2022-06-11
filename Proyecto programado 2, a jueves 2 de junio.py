@@ -264,7 +264,6 @@ def matrizEquipos(event):
     winMatrizPuntos.title("Tabla de Resultados")
     x = 100
     y = 200
-    #hola.
     winMatrizPuntos.geometry("+%d+%d" % (x+75, y+75))
     winMatrizPuntos.protocol("WM_DELETE_WINDOW", on_closing)
     equiposDic = {}
@@ -276,7 +275,6 @@ def matrizEquipos(event):
         nombreD = equiposD[2]
         equiposDic[codigo] = nombreD
     inicio = 0
-    equiposDic = estadoActual["equipos"]
     EquiposT = [[""]]
     for x in range(len(equiposDic)):
         EquiposT[0].append([equiposDic[inicio]]) 
@@ -356,7 +354,7 @@ def matrizEquipos(event):
                         listaPorEquipo.append(totalPuntosEnContra)
                         listaPorEquipo.append(totalDiferenciaDePuntos)
                         listaDeClasificacion.append(listaPorEquipo)
-                    estadoActual["listaDeClasificasion"] = listaDeClasificacion
+                    estadoActual["listaDeClasificacion"] = listaDeClasificacion
                     return listaDeClasificacion
 
         def cantidadEquiposAFinal():
