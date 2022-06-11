@@ -275,6 +275,8 @@ def matrizEquipos(event):
         nombreD = equiposD[2]
         equiposDic[codigo] = nombreD
     inicio = 0
+    equiposDic = estadoActual["equipos"]
+    inicio = 1
     EquiposT = [[""]]
     for x in range(len(equiposDic)):
         EquiposT[0].append([equiposDic[inicio]]) 
@@ -288,6 +290,8 @@ def matrizEquipos(event):
     class Table:
         def __init__(self, winMatrizPuntos):
             puntoEquipo = []
+        def __init__(self, root):
+            puntoEquipo = [] 
             dataPorEquipo = []
             for iFila in range(total_rows):
                 dataPorEquipo = []
