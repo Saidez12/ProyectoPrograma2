@@ -264,6 +264,7 @@ def matrizEquipos(event):
     winMatrizPuntos.title("Tabla de Resultados")
     x = 100
     y = 200
+    #hola.
     winMatrizPuntos.geometry("+%d+%d" % (x+75, y+75))
     winMatrizPuntos.protocol("WM_DELETE_WINDOW", on_closing)
     equiposDic = {}
