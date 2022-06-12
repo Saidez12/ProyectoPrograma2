@@ -281,7 +281,7 @@ def matrizEquipos(event):
         EquiposT.append([equiposDic[inicio], puntajeAletorio(), puntajeAletorio(), puntajeAletorio(), puntajeAletorio(), puntajeAletorio(), puntajeAletorio()])
         inicio+=1
     btnResultados= tk.Button(
-    cantidadEquiposVentana, text="RESULTADOS", bg="#926359", fg="#FFFFFF")
+    winMatrizPuntos, text="RESULTADOS", bg="#926359", fg="#FFFFFF")
     btnResultados.place(x=650, y=425)
     #btnResultados.bind("<Button-1>", comando)
 
