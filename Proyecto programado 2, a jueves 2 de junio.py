@@ -119,6 +119,142 @@ def ingresoEquipos (event):
             data = pickle.load(fp)
         print(equipos)
 
+
+    def puntajeAletorio(): 
+        return random.randint(0,150)
+
+    def matrizEquipos(event):
+        winMatrizPuntos = tk.Toplevel(cantidadEquiposVentana)
+        winMatrizPuntos.resizable(False, False)
+        winMatrizPuntos.geometry("1250x500")
+        winMatrizPuntos.title("Tabla de Resultados")
+        x = 100
+        y = 200
+        winMatrizPuntos.geometry("+%d+%d" % (x+75, y+75))
+        winMatrizPuntos.protocol("WM_DELETE_WINDOW", on_closing)
+        equiposDic = {}
+        codigo = estadoActual["codigo"] 
+        equipos1 = estadoActual["equipos"]
+        for y in range(len(equipos1)):
+            codigo = y
+            equiposD=list(equipos1[codigo].values())
+            nombreD = equiposD[2]
+            equiposDic[codigo] = nombreD
+        inicio = 0
+        EquiposT = [[""]]
+        for x in range(len(equiposDic)):
+            EquiposT[0].append([equiposDic[inicio]]) 
+            EquiposT.append([equiposDic[inicio], puntajeAletorio(), puntajeAletorio(), puntajeAletorio(), puntajeAletorio(), puntajeAletorio(), puntajeAletorio()])
+            inicio+=1
+        btnEliminarEquipo= tk.Button(
+            winMatrizPuntos, text="ELIMINAR EQUIPO", bg="#926359", fg="#FFFFFF")
+        btnEliminarEquipo.place(x=25, y=125)
+        btnEliminarEquipo.bind("<Button-1>", eliminarEquipo)
+        btnResultados= tk.Button(
+        winMatrizPuntos, text="RESULTADOS", bg="#926359", fg="#FFFFFF")
+        btnResultados.place(x=650, y=425)
+        #btnResultados.bind("<Button-1>", estadisticasTablas)
+
+        class Table:
+            def __init__(self, winMatrizPuntos):
+                puntoEquipo = []
+            def __init__(self, root):
+                puntoEquipo = [] 
+                dataPorEquipo = []
+                for iFila in range(total_rows):
+                    dataPorEquipo = []
+                    for iColumna in range(total_columns):
+                        self.e = Entry(winMatrizPuntos, width=15, fg='black',
+                                        font=('Arial', 12, 'bold'))
+                        self.e.grid(row=iFila, column=iColumna)
+                        if iFila != iColumna:
+                            self.e.insert(END, lst[iFila][iColumna])
+                            if iFila != 0:
+                                dataPorEquipo.append(lst[iFila][iColumna])
+                        else:
+                            if iFila == 0 and iColumna == 0:
+                                self.e.insert(END, "")
+                            else:
+                                self.e.insert(END, -1)
+                                dataPorEquipo.append(-1)        
+                    puntoEquipo.append(dataPorEquipo)
+                puntoEquipo = puntoEquipo[1:]
+
+                def estadisticasTablas(event):  
+                        listaDeClasificacion = []
+                        indiceColumnaDato = 0
+                        for fila in range(len(puntoEquipo)):
+                            listaPorEquipo = []
+                            indiceColumnaDato += 1
+                            sumaDeClasificacion = 0
+                            indiceFilaDato = 0
+                            partidosGanados = 0
+                            partidosPerdidos = 0
+                            partidosEmpatados = 0
+                            totalPuntosAFavor = 0
+                            totalPuntosEnContra = 0
+                            totalDiferenciaDePuntos = 0
+                            for columna in range(len(puntoEquipo[0])):
+                                if type(puntoEquipo[fila][columna]) == str:
+                                    listaPorEquipo.append(puntoEquipo[fila][columna])
+                                else:
+                                    if puntoEquipo[fila][columna] == -1:
+                                        continue
+                                    if indiceFilaDato == fila:
+                                        indiceFilaDato+=1
+                                    if puntoEquipo[fila][columna] > puntoEquipo[indiceFilaDato][indiceColumnaDato]:
+                                        sumaDeClasificacion += 3
+                                        partidosGanados += 1
+                                    elif puntoEquipo[fila][columna] < puntoEquipo[indiceFilaDato][indiceColumnaDato]:
+                                        partidosPerdidos += 1
+                                    elif puntoEquipo[fila][columna] == puntoEquipo[indiceFilaDato][indiceColumnaDato]:
+                                        sumaDeClasificacion += 1
+                                        partidosEmpatados += 1
+                                    indiceFilaDato += 1
+                                    totalPuntosAFavor += puntoEquipo[fila][columna]
+                                    if type(puntoEquipo[indiceFilaDato-1][indiceColumnaDato] ) == int:
+                                        totalPuntosEnContra += puntoEquipo[indiceFilaDato-1][indiceColumnaDato]    
+                            totalDiferenciaDePuntos = totalPuntosAFavor - totalPuntosEnContra
+                            listaPorEquipo.append(partidosGanados)
+                            listaPorEquipo.append(partidosEmpatados)
+                            listaPorEquipo.append(partidosPerdidos)
+                            listaPorEquipo.append(sumaDeClasificacion)
+                            listaPorEquipo.append(totalPuntosAFavor)
+                            listaPorEquipo.append(totalPuntosEnContra)
+                            listaPorEquipo.append(totalDiferenciaDePuntos)
+                            listaDeClasificacion.append(listaPorEquipo)
+                        estadoActual["listaDeClasificacion"] = listaDeClasificacion
+                        print(estadoActual["listaDeClasificacion"])
+                        return listaDeClasificacion
+                    
+                def estadisticasDelCampeonato(event):
+                    codigo = estadoActual["codigo"] 
+                    equipos2 = estadoActual["equipos"]
+                    estadisticas = estadoActual["listaDeClasificacion"]
+                
+        def cantidadEquiposAFinal():
+            winVentana6= tk.Toplevel(cantidadEquiposVentana)
+            winVentana6.resizable(False, False)
+            winVentana6.geometry("375x125")
+            winVentana6.title("Equipos a la final")
+            x = 100
+            y = 200
+            winVentana6.geometry("+%d+%d" % (x+75, y+75))
+            winVentana6.protocol("WM_DELETE_WINDOW", on_closing)
+            lblEquiposFinal = tk.Label(
+                winVentana6, text="Indique la cantidad de equipos que desea en la final ")
+            lblEquiposFinal.place(x=10, y=25)
+            entEquiposFinal = tk.Entry(
+                winVentana6, fg="White", bg="Black", width=15)
+            entEquiposFinal.place(x=125, y=55)
+        
+        lst = EquiposT
+        total_rows = len(lst)
+        total_columns = len(lst[0])
+        t = Table(winMatrizPuntos)
+        cantidadEquiposVentana.mainloop()
+
+
     def intermedio():
         winVentana3= tk.Toplevel(infoEquiposVentana)
         winVentana3.resizable(False, False)
@@ -134,20 +270,17 @@ def ingresoEquipos (event):
             winVentana3, text="Los equipos se han guardado satisfactoriamente")
         lblEquiposGuardados.place(x=15, y=25)
         btnIniciar = tk.Button(
-            winVentana3, text="Simulación de torneo", bg="#926359", fg="#FFFFFF")
+            winVentana3, text="SIMULACIÓN", bg="#926359", fg="#FFFFFF")
         btnModificar = tk.Button(
             winVentana3, text="MODIFICAR", bg="#926359", fg="#FFFFFF")
         btnModificar.place(x=25, y=75)
         btnModificar.bind("<Button-1>", modificarDiccionario)
         btnIniciar.place(x=150, y=75)
-        btnEliminarEquipo= tk.Button(
-            winVentana3, text="ELIMINAR EQUIPO", bg="#926359", fg="#FFFFFF")
-        btnEliminarEquipo.place(x=25, y=125)
-        btnEliminarEquipo.bind("<Button-1>", eliminarEquipo)
         btnTablaResultados= tk.Button(
             winVentana3, text="VER TABLA", bg="#926359", fg="#FFFFFF")
         btnTablaResultados.place(x=150, y=125)
         btnTablaResultados.bind("<Button-1>", matrizEquipos)
+        #btnIniciar.bind("<Button-1>", comando)
 
     def almacenarModificaciones():
         codigo = estadoActual["codigo"]
@@ -254,130 +387,7 @@ def ingresoEquipos (event):
         btnContinuarIngreso.bind("<Button-1>", editarEquipo)
 
 
-def puntajeAletorio(): 
-    return random.randint(0,150)
 
-def matrizEquipos(event):
-    winMatrizPuntos = tk.Toplevel(cantidadEquiposVentana)
-    winMatrizPuntos.resizable(False, False)
-    winMatrizPuntos.geometry("1250x500")
-    winMatrizPuntos.title("Tabla de Resultados")
-    x = 100
-    y = 200
-    winMatrizPuntos.geometry("+%d+%d" % (x+75, y+75))
-    winMatrizPuntos.protocol("WM_DELETE_WINDOW", on_closing)
-    equiposDic = {}
-    codigo = estadoActual["codigo"] 
-    equipos1 = estadoActual["equipos"]
-    for y in range(len(equipos1)):
-        codigo = y
-        equiposD=list(equipos1[codigo].values())
-        nombreD = equiposD[2]
-        equiposDic[codigo] = nombreD
-    inicio = 0
-    EquiposT = [[""]]
-    for x in range(len(equiposDic)):
-        EquiposT[0].append([equiposDic[inicio]]) 
-        EquiposT.append([equiposDic[inicio], puntajeAletorio(), puntajeAletorio(), puntajeAletorio(), puntajeAletorio(), puntajeAletorio(), puntajeAletorio()])
-        inicio+=1
-    btnResultados= tk.Button(
-    winMatrizPuntos, text="RESULTADOS", bg="#926359", fg="#FFFFFF")
-    btnResultados.place(x=650, y=425)
-    #btnResultados.bind("<Button-1>", comando)
-
-    class Table:
-        def __init__(self, winMatrizPuntos):
-            puntoEquipo = []
-        def __init__(self, root):
-            puntoEquipo = [] 
-            dataPorEquipo = []
-            for iFila in range(total_rows):
-                dataPorEquipo = []
-                for iColumna in range(total_columns):
-                    self.e = Entry(winMatrizPuntos, width=15, fg='black',
-                                    font=('Arial', 12, 'bold'))
-                    self.e.grid(row=iFila, column=iColumna)
-                    if iFila != iColumna:
-                        self.e.insert(END, lst[iFila][iColumna])
-                        if iFila != 0:
-                            dataPorEquipo.append(lst[iFila][iColumna])
-                    else:
-                        if iFila == 0 and iColumna == 0:
-                            self.e.insert(END, "")
-                        else:
-                            self.e.insert(END, -1)
-                            dataPorEquipo.append(-1)        
-                puntoEquipo.append(dataPorEquipo)
-            puntoEquipo = puntoEquipo[1:]
- 
-    
-            def estadisticasTablas():  
-                    listaDeClasificacion = []
-                    indiceColumnaDato = 0
-                    for fila in range(len(puntoEquipo)):
-                        listaPorEquipo = []
-                        indiceColumnaDato += 1
-                        sumaDeClasificacion = 0
-                        indiceFilaDato = 0
-                        partidosGanados = 0
-                        partidosPerdidos = 0
-                        partidosEmpatados = 0
-                        totalPuntosAFavor = 0
-                        totalPuntosEnContra = 0
-                        totalDiferenciaDePuntos = 0
-                        for columna in range(len(puntoEquipo[0])):
-                            if type(puntoEquipo[fila][columna]) == str:
-                                listaPorEquipo.append(puntoEquipo[fila][columna])
-                            else:
-                                if puntoEquipo[fila][columna] == -1:
-                                    continue
-                                if indiceFilaDato == fila:
-                                    indiceFilaDato+=1
-                                if puntoEquipo[fila][columna] > puntoEquipo[indiceFilaDato][indiceColumnaDato]:
-                                    sumaDeClasificacion += 3
-                                    partidosGanados += 1
-                                elif puntoEquipo[fila][columna] < puntoEquipo[indiceFilaDato][indiceColumnaDato]:
-                                    partidosPerdidos += 1
-                                elif puntoEquipo[fila][columna] == puntoEquipo[indiceFilaDato][indiceColumnaDato]:
-                                    sumaDeClasificacion += 1
-                                    partidosEmpatados += 1
-                                indiceFilaDato += 1
-                                totalPuntosAFavor += puntoEquipo[fila][columna]
-                                if type(puntoEquipo[indiceFilaDato-1][indiceColumnaDato] ) == int:
-                                    totalPuntosEnContra += puntoEquipo[indiceFilaDato-1][indiceColumnaDato]    
-                        totalDiferenciaDePuntos = totalPuntosAFavor - totalPuntosEnContra
-                        listaPorEquipo.append(partidosGanados)
-                        listaPorEquipo.append(partidosEmpatados)
-                        listaPorEquipo.append(partidosPerdidos)
-                        listaPorEquipo.append(sumaDeClasificacion)
-                        listaPorEquipo.append(totalPuntosAFavor)
-                        listaPorEquipo.append(totalPuntosEnContra)
-                        listaPorEquipo.append(totalDiferenciaDePuntos)
-                        listaDeClasificacion.append(listaPorEquipo)
-                    estadoActual["listaDeClasificacion"] = listaDeClasificacion
-                    return listaDeClasificacion
-
-        def cantidadEquiposAFinal():
-            winVentana6= tk.Toplevel(cantidadEquiposVentana)
-            winVentana6.resizable(False, False)
-            winVentana6.geometry("375x125")
-            winVentana6.title("Equipos a la final")
-            x = 100
-            y = 200
-            winVentana6.geometry("+%d+%d" % (x+75, y+75))
-            winVentana6.protocol("WM_DELETE_WINDOW", on_closing)
-            lblEquiposFinal = tk.Label(
-                winVentana6, text="Indique la cantidad de equipos que desea en la final ")
-            lblEquiposFinal.place(x=10, y=25)
-            entEquiposFinal = tk.Entry(
-                winVentana6, fg="White", bg="Black", width=15)
-            entEquiposFinal.place(x=125, y=55)
-        
-    lst = EquiposT
-    total_rows = len(lst)
-    total_columns = len(lst[0])
-    t = Table(winMatrizPuntos)
-    cantidadEquiposVentana.mainloop()
 
 
 def on_closing():
@@ -402,3 +412,5 @@ btnContinuar.place(x=100, y=75)
 btnContinuar.bind("<Button-1>", ingresoEquipos)
 cantidadEquiposVentana.protocol("WM_DELETE_WINDOW", on_closing)
 cantidadEquiposVentana.mainloop()
+
+
