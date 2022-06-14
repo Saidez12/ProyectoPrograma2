@@ -248,16 +248,12 @@ def ingresoEquipos (event):
                             listaPorEquipo.append(totalDiferenciaDePuntos)
                             listaDeClasificacion.append(listaPorEquipo)
                         estadoActual["listaDeClasificacion"] = listaDeClasificacion
-                        print(estadoActual["listaDeClasificacion"])
                         return listaDeClasificacion
-                    
+
                 def estadisticasDelCampeonato(event):
                     codigo = estadoActual["codigo"] 
                     equipos2 = estadoActual["equipos"]
                     estadisticas = estadoActual["listaDeClasificacion"]
-                
-
-
         
         lst = EquiposT
         total_rows = len(lst)
@@ -305,10 +301,6 @@ def ingresoEquipos (event):
         btnFinal= tk.Button(winVentana6, text="Iniciar Final", bg="#926359", fg="#FFFFFF")
         btnFinal.place(x=25, y=75)
         btnFinal.bind("<Button-1>",iniciarFinal )
-
-
-
-
 
 
     def intermedio():
