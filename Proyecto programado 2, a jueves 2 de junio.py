@@ -15,13 +15,9 @@ import random
 def puntajeAleatorio(): 
     return random.randint(0,150)
 
-def Tabla():
-    equiposDic=["Tigres","GOl","Koala","loba","JUlio","HULK"]
-    inicio = 0
-    Equipos = []
-    d=[["Equipo","Puntos Anotados","Equipo","Puntos Anotados","Ganador"]]
+def Tabla(equiposDic=["Tigres","GOl","Koala","loba","JUlio","HULK"],inicio=0,Equipos=[],d=[["Equipo","Puntos Anotados","Equipo","Puntos Anotados","Ganador"]]):
     while(inicio<len(equiposDic)):
-        Equipos.extend([equiposDic[inicio],puntajeAleatorio()]) 
+        Equipos.extend([equiposDic[inicio],puntajeAleatorio()])+Tabla(equiposDic,inicio)
         Equipos.extend([equiposDic[inicio+1],puntajeAleatorio()])
         if(Equipos[1]>Equipos[3]):
             EquipoGanador=Equipos[0]
