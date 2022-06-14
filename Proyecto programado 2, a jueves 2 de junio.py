@@ -15,7 +15,7 @@ import random
 def puntajeAleatorio(): 
     return random.randint(0,150)
 
-def Tabla(equiposDic=["Tigres","GOl","Koala","loba","JUlio","HULK","LOl","Kill"],d=[["Equipo","Puntos Anotados","Equipo","Puntos Anotados","Ganador"]],inicio=0,Equipos=[],EquipoGanador=""):
+def Tabla(equiposDic,d=[["Equipo","Puntos Anotados","Equipo","Puntos Anotados","Ganador"]],inicio=0,Equipos=[],EquipoGanador=""):
     if(inicio>=len(equiposDic)):
         return d
     Equipo1=equiposDic[inicio]
@@ -256,23 +256,13 @@ def ingresoEquipos (event):
                                 break
                             elif equipos[posicionEquipo][4] > equiposOrdenados[equipoComparacion][4]:
                                 equiposOrdenados.append[0](equipos[posicionEquipo])
-                                break
+                        break
+                def nombresDeEquiposOrdenados(NombresOrdenados=[],Lista=ordenarEquipos(),indice=0):
+                    if(indice>=len(Lista)):
+                        return NombresOrdenados
+                    Equipo=[(Lista[indice][0])]
+                    return nombresDeEquiposOrdenados(NombresOrdenados+Equipo,Lista,indice+1)
                     
-                
-                def ordenarEquipos():
-                    equipos = estadisticasTablas()
-                    equiposOrdenados = []
-                    equiposOrdenados.append(equipos[0])
-                    equipos = equipos[1:]
-                    for posicionEquipo in range(len(equipos)):
-                        for equipoComparacion in range(len(equiposOrdenados)):
-                            if equipos[posicionEquipo][4] > equiposOrdenados[equipoComparacion][4]:
-                                equiposOrdenados.insert(equipoComparacion, equipos[posicionEquipo])
-                                break
-                        if equipos[posicionEquipo] not in equiposOrdenados:
-                            equiposOrdenados.append(equipos[posicionEquipo])
-                    return equiposOrdenados
-
                 def estadisticasDelCampeonato(event):
                     codigo = estadoActual["codigo"] 
                     equipos3= estadoActual["equipos"]
@@ -333,7 +323,7 @@ def ingresoEquipos (event):
                                                 font=('Arial', 12, 'bold'))
                                 self.e.grid(row=i, column=j)
                                 self.e.insert(END, lst[i][j])
-            lst = Tabla()
+            lst = Tabla(nombresDeEquiposOrdenados)
             total_rows = len(lst)
             total_columns = len(lst[0])
             t = Table(winMatrizFinal)
