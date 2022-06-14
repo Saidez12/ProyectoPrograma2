@@ -250,6 +250,20 @@ def ingresoEquipos (event):
                         estadoActual["listaDeClasificacion"] = listaDeClasificacion
                         print(estadoActual["listaDeClasificacion"])
                         return listaDeClasificacion
+                def ordenarEquipos():
+                    equipos = estadisticasTablas()
+                    equiposOrdenados = [[]]
+                    equiposOrdenados.append(equipos[1])
+                    equipos = equipos[1:]
+                    for posicionEquipo in range(len(equipos)):
+                        indice = 0
+                        for equipoComparacion in range(len(equiposOrdenados)):
+                            if equipos[posicionEquipo][4] < equiposOrdenados[-equipoComparacion][4]:
+                                equiposOrdenados.append[0](equipos[posicionEquipo])
+                                break
+                            elif equipos[posicionEquipo][4] > equiposOrdenados[equipoComparacion][4]:
+                                equiposOrdenados.append[0](equipos[posicionEquipo])
+                                break
                     
                 def estadisticasDelCampeonato(event):
                     codigo = estadoActual["codigo"] 
