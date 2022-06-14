@@ -309,7 +309,7 @@ def ingresoEquipos (event):
         def iniciarFinal(event):
             winMatrizFinal = tk.Toplevel(winVentana6)
             winMatrizFinal.resizable(False, False)
-            winMatrizFinal.geometry("1250x500")
+            winMatrizFinal.geometry("400x500")
             winMatrizFinal.title("Tabla de Fase Final de campeonato")
             x = 100
             y = 200
