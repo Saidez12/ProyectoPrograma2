@@ -15,21 +15,20 @@ import random
 def puntajeAleatorio(): 
     return random.randint(0,150)
 
-def Tabla(equiposDic=["Tigres","GOl","Koala","loba","JUlio","HULK"],inicio=0,Equipos=[],d=[["Equipo","Puntos Anotados","Equipo","Puntos Anotados","Ganador"]]):
-    while(inicio<len(equiposDic)):
-        Equipos.extend([equiposDic[inicio],puntajeAleatorio()])+Tabla(equiposDic,inicio)
-        Equipos.extend([equiposDic[inicio+1],puntajeAleatorio()])
-        if(Equipos[1]>Equipos[3]):
-            EquipoGanador=Equipos[0]
-        else:
-            EquipoGanador=Equipos[2]
-        if(Equipos[1]==Equipos[3]):
-            Equipos[1]=puntajeAleatorio()
-        Equipos.append(EquipoGanador)
-        d+=[Equipos]
-        Equipos=[]
-        inicio+=2
-    return d
+def Tabla(equiposDic=["Tigres","GOl","Koala","loba","JUlio","HULK","LOl","Kill"],d=[["Equipo","Puntos Anotados","Equipo","Puntos Anotados","Ganador"]],inicio=0,Equipos=[],EquipoGanador=""):
+    if(inicio>=len(equiposDic)):
+        return d
+    Equipo1=equiposDic[inicio]
+    Equipo2=equiposDic[inicio+1]
+    puntaje1=puntajeAleatorio()
+    puntaje2=puntajeAleatorio()
+    if(puntaje1>puntaje2):
+        EquipoGanador=Equipo1
+    elif(puntaje2>puntaje1):
+        EquipoGanador=Equipo2
+    if(puntaje1==puntaje2):
+        puntaje1=puntajeAleatorio()
+    return Tabla(equiposDic,d+([[Equipo1,puntaje1,Equipo2,puntaje2,EquipoGanador]]),inicio+2,[],"")
 
 cantidadEquiposVentana = tk.Tk()
 
