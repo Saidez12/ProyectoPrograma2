@@ -15,13 +15,9 @@ import random
 def puntajeAleatorio(): 
     return random.randint(0,150)
 
-def Tabla():
-    equiposDic=["Tigres","GOl","Koala","loba","JUlio","HULK"]
-    inicio = 0
-    Equipos = []
-    d=[["Equipo","Puntos Anotados","Equipo","Puntos Anotados","Ganador"]]
+def Tabla(equiposDic=["Tigres","GOl","Koala","loba","JUlio","HULK"],inicio=0,Equipos=[],d=[["Equipo","Puntos Anotados","Equipo","Puntos Anotados","Ganador"]]):
     while(inicio<len(equiposDic)):
-        Equipos.extend([equiposDic[inicio],puntajeAleatorio()]) 
+        Equipos.extend([equiposDic[inicio],puntajeAleatorio()])+Tabla(equiposDic,inicio)
         Equipos.extend([equiposDic[inicio+1],puntajeAleatorio()])
         if(Equipos[1]>Equipos[3]):
             EquipoGanador=Equipos[0]
@@ -34,7 +30,6 @@ def Tabla():
         Equipos=[]
         inicio+=2
     return d
-
 
 cantidadEquiposVentana = tk.Tk()
 
@@ -203,7 +198,7 @@ def ingresoEquipos (event):
                                 dataPorEquipo.append(-1)        
                     puntoEquipo.append(dataPorEquipo)
                 puntoEquipo = puntoEquipo[1:]
-
+                
                 def estadisticasTablas(event):  
                         listaDeClasificacion = []
                         indiceColumnaDato = 0
@@ -248,7 +243,6 @@ def ingresoEquipos (event):
                             listaPorEquipo.append(totalDiferenciaDePuntos)
                             listaDeClasificacion.append(listaPorEquipo)
                         estadoActual["listaDeClasificacion"] = listaDeClasificacion
-                        print(estadoActual["listaDeClasificacion"])
                         return listaDeClasificacion
                 def ordenarEquipos():
                     equipos = estadisticasTablas()
@@ -265,13 +259,41 @@ def ingresoEquipos (event):
                                 equiposOrdenados.append[0](equipos[posicionEquipo])
                                 break
                     
+                
+                def ordenarEquipos():
+                    equipos = estadisticasTablas()
+                    equiposOrdenados = []
+                    equiposOrdenados.append(equipos[0])
+                    equipos = equipos[1:]
+                    for posicionEquipo in range(len(equipos)):
+                        for equipoComparacion in range(len(equiposOrdenados)):
+                            if equipos[posicionEquipo][4] > equiposOrdenados[equipoComparacion][4]:
+                                equiposOrdenados.insert(equipoComparacion, equipos[posicionEquipo])
+                                break
+                        if equipos[posicionEquipo] not in equiposOrdenados:
+                            equiposOrdenados.append(equipos[posicionEquipo])
+                    return equiposOrdenados
+
                 def estadisticasDelCampeonato(event):
                     codigo = estadoActual["codigo"] 
-                    equipos2 = estadoActual["equipos"]
+                    equipos3= estadoActual["equipos"]
                     estadisticas = estadoActual["listaDeClasificacion"]
-                
-
-
+                    valorPlanillaLista = []
+                    indice = 1
+                    for y in range(len(equipos3)):
+                        codigo = y
+                        equipos4= list(equipos3[codigo].values())
+                        valorPlanillaLista.append(equipos4[3]) 
+                    valoresPlanillas = []
+                    for podio in valorPlanillaLista:
+                        if (valorPlanillaLista[podio] > valorPlanillaLista(indice)):
+                            valoresPlanillas.append(valorPlanillaLista[podio]) 
+                        elif(valorPlanillaLista[podio] < valorPlanillaLista(indice)):
+                            valoresPlanillas.append(valorPlanillaLista(indice))
+                        else:
+                            indice+=1
+                            continue
+                        
         
         lst = EquiposT
         total_rows = len(lst)
@@ -319,10 +341,6 @@ def ingresoEquipos (event):
         btnFinal= tk.Button(winVentana6, text="Iniciar Final", bg="#926359", fg="#FFFFFF")
         btnFinal.place(x=25, y=75)
         btnFinal.bind("<Button-1>",iniciarFinal )
-
-
-
-
 
 
     def intermedio():
