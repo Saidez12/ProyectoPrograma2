@@ -12,6 +12,30 @@ from tkinter import messagebox
 from typing import Any, Hashable,Iterable,Optional
 import random
 
+def puntajeAleatorio(): 
+    return random.randint(0,150)
+
+def Tabla():
+    equiposDic=["Tigres","GOl","Koala","loba","JUlio","HULK"]
+    inicio = 0
+    Equipos = []
+    d=[["Equipo","Puntos Anotados","Equipo","Puntos Anotados","Ganador"]]
+    while(inicio<len(equiposDic)):
+        Equipos.extend([equiposDic[inicio],puntajeAleatorio()]) 
+        Equipos.extend([equiposDic[inicio+1],puntajeAleatorio()])
+        if(Equipos[1]>Equipos[3]):
+            EquipoGanador=Equipos[0]
+        else:
+            EquipoGanador=Equipos[2]
+        if(Equipos[1]==Equipos[3]):
+            Equipos[1]=puntajeAleatorio()
+        Equipos.append(EquipoGanador)
+        d+=[Equipos]
+        Equipos=[]
+        inicio+=2
+    return d
+
+
 cantidadEquiposVentana = tk.Tk()
 
 cantidadEquiposVentana.resizable(False, False)
@@ -232,27 +256,58 @@ def ingresoEquipos (event):
                     equipos2 = estadoActual["equipos"]
                     estadisticas = estadoActual["listaDeClasificacion"]
                 
-        def cantidadEquiposAFinal():
-            winVentana6= tk.Toplevel(cantidadEquiposVentana)
-            winVentana6.resizable(False, False)
-            winVentana6.geometry("375x125")
-            winVentana6.title("Equipos a la final")
-            x = 100
-            y = 200
-            winVentana6.geometry("+%d+%d" % (x+75, y+75))
-            winVentana6.protocol("WM_DELETE_WINDOW", on_closing)
-            lblEquiposFinal = tk.Label(
-                winVentana6, text="Indique la cantidad de equipos que desea en la final ")
-            lblEquiposFinal.place(x=10, y=25)
-            entEquiposFinal = tk.Entry(
-                winVentana6, fg="White", bg="Black", width=15)
-            entEquiposFinal.place(x=125, y=55)
+
+
         
         lst = EquiposT
         total_rows = len(lst)
         total_columns = len(lst[0])
         t = Table(winMatrizPuntos)
         cantidadEquiposVentana.mainloop()
+
+#Requerimiento 2.4
+    def cantidadEquiposAFinal(event):
+        winVentana6= tk.Toplevel(cantidadEquiposVentana)
+        winVentana6.resizable(False, False)
+        winVentana6.geometry("375x125")
+        winVentana6.title("Equipos a la final")
+        x = 100
+        y = 200
+        winVentana6.geometry("+%d+%d" % (x+75, y+75))
+        winVentana6.protocol("WM_DELETE_WINDOW", on_closing)
+        lblEquiposFinal = tk.Label(
+            winVentana6, text="Indique la cantidad de equipos que desea en la final ")
+        lblEquiposFinal.place(x=10, y=25)
+        entEquiposFinal = tk.Entry(
+            winVentana6, fg="White", bg="Black", width=15)
+        entEquiposFinal.place(x=125, y=55)
+        def iniciarFinal(event):
+            winMatrizFinal = tk.Toplevel(winVentana6)
+            winMatrizFinal.resizable(False, False)
+            winMatrizFinal.geometry("1250x500")
+            winMatrizFinal.title("Tabla de Fase Final de campeonato")
+            x = 100
+            y = 200
+            winMatrizFinal.geometry("+%d+%d" % (x+75, y+75))
+            winMatrizFinal.protocol("WM_DELETE_WINDOW", on_closing)
+            class Table:
+                    def __init__(self, winMatrizFinal):
+                        for i in range(total_rows):
+                            for j in range(total_columns):
+                                self.e = Entry(winMatrizFinal, width=15, fg='black',
+                                                font=('Arial', 12, 'bold'))
+                                self.e.grid(row=i, column=j)
+                                self.e.insert(END, lst[i][j])
+            lst = Tabla()
+            total_rows = len(lst)
+            total_columns = len(lst[0])
+            t = Table(winMatrizFinal)
+        btnFinal= tk.Button(winVentana6, text="Iniciar Final", bg="#926359", fg="#FFFFFF")
+        btnFinal.place(x=25, y=75)
+        btnFinal.bind("<Button-1>",iniciarFinal )
+
+
+
 
 
 
@@ -281,7 +336,7 @@ def ingresoEquipos (event):
             winVentana3, text="VER TABLA", bg="#926359", fg="#FFFFFF")
         btnTablaResultados.place(x=150, y=125)
         btnTablaResultados.bind("<Button-1>", matrizEquipos)
-        #btnIniciar.bind("<Button-1>", comando)
+        btnIniciar.bind("<Button-1>", cantidadEquiposAFinal)
 
     def almacenarModificaciones():
         codigo = estadoActual["codigo"]
