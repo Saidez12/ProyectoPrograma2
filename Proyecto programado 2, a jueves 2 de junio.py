@@ -255,6 +255,7 @@ def ingresoEquipos (event):
         cantidadEquiposVentana.mainloop()
 
 
+
     def intermedio():
         winVentana3= tk.Toplevel(infoEquiposVentana)
         winVentana3.resizable(False, False)
