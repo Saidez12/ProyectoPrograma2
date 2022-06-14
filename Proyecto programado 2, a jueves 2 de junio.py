@@ -35,7 +35,6 @@ def Tabla():
         inicio+=2
     return d
 
-
 cantidadEquiposVentana = tk.Tk()
 
 cantidadEquiposVentana.resizable(False, False)
@@ -203,7 +202,7 @@ def ingresoEquipos (event):
                                 dataPorEquipo.append(-1)        
                     puntoEquipo.append(dataPorEquipo)
                 puntoEquipo = puntoEquipo[1:]
-
+                
                 def estadisticasTablas(event):  
                         listaDeClasificacion = []
                         indiceColumnaDato = 0
@@ -249,6 +248,21 @@ def ingresoEquipos (event):
                             listaDeClasificacion.append(listaPorEquipo)
                         estadoActual["listaDeClasificacion"] = listaDeClasificacion
                         return listaDeClasificacion
+                    
+                
+                def ordenarEquipos():
+                    equipos = estadisticasTablas()
+                    equiposOrdenados = []
+                    equiposOrdenados.append(equipos[0])
+                    equipos = equipos[1:]
+                    for posicionEquipo in range(len(equipos)):
+                        for equipoComparacion in range(len(equiposOrdenados)):
+                            if equipos[posicionEquipo][4] > equiposOrdenados[equipoComparacion][4]:
+                                equiposOrdenados.insert(equipoComparacion, equipos[posicionEquipo])
+                                break
+                        if equipos[posicionEquipo] not in equiposOrdenados:
+                            equiposOrdenados.append(equipos[posicionEquipo])
+                    return equiposOrdenados
 
                 def estadisticasDelCampeonato(event):
                     codigo = estadoActual["codigo"] 
