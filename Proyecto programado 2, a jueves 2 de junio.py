@@ -15,6 +15,7 @@ import random
 def puntajeAleatorio(): 
     return random.randint(0,150)
 
+<<<<<<< HEAD
 def Tabla(equiposDic,d=[["Equipo","Puntos Anotados","Equipo","Puntos Anotados","Ganador"]],inicio=0,Equipos=[],EquipoGanador=""):
     if(inicio>=len(equiposDic)):
         return d
@@ -29,6 +30,10 @@ def Tabla(equiposDic,d=[["Equipo","Puntos Anotados","Equipo","Puntos Anotados","
     if(puntaje1==puntaje2):
         puntaje1=puntajeAleatorio()
     return Tabla(equiposDic,d+([[Equipo1,puntaje1,Equipo2,puntaje2,EquipoGanador]]),inicio+2,[],"")
+=======
+# DICCIONARIO DE ALMACENAMIENTO
+estadoActual = {"indice" : -1,"equipos" : NULL, "equipoActual": NULL, "codigo": 0, "listaDeClasificacion" : NULL, "equiposOrdenados": NULL} 
+>>>>>>> 125379305b6d9b35717d3e4b92de871debd5d834
 
 cantidadEquiposVentana = tk.Tk()
 
@@ -199,6 +204,7 @@ def ingresoEquipos (event):
                 puntoEquipo = puntoEquipo[1:]
                 
                 def estadisticasTablas(event):  
+<<<<<<< HEAD
                         listaDeClasificacion = []
                         indiceColumnaDato = 0
                         for fila in range(len(puntoEquipo)):
@@ -243,6 +249,53 @@ def ingresoEquipos (event):
                             listaDeClasificacion.append(listaPorEquipo)
                         estadoActual["listaDeClasificacion"] = listaDeClasificacion
                         return listaDeClasificacion
+=======
+                    listaDeClasificacion = []
+                    indiceColumnaDato = 0
+                    for fila in range(len(puntoEquipo)):
+                        listaPorEquipo = []
+                        indiceColumnaDato += 1
+                        sumaDeClasificacion = 0
+                        indiceFilaDato = 0
+                        partidosGanados = 0
+                        partidosPerdidos = 0
+                        partidosEmpatados = 0
+                        totalPuntosAFavor = 0
+                        totalPuntosEnContra = 0
+                        totalDiferenciaDePuntos = 0
+                        for columna in range(len(puntoEquipo[0])):
+                            if type(puntoEquipo[fila][columna]) == str:
+                                listaPorEquipo.append(puntoEquipo[fila][columna])
+                            else:
+                                if puntoEquipo[fila][columna] == -1:
+                                    continue
+                                if indiceFilaDato == fila:
+                                    indiceFilaDato+=1
+                                if puntoEquipo[fila][columna] > puntoEquipo[indiceFilaDato][indiceColumnaDato]:
+                                    sumaDeClasificacion += 3
+                                    partidosGanados += 1
+                                elif puntoEquipo[fila][columna] < puntoEquipo[indiceFilaDato][indiceColumnaDato]:
+                                    partidosPerdidos += 1
+                                elif puntoEquipo[fila][columna] == puntoEquipo[indiceFilaDato][indiceColumnaDato]:
+                                    sumaDeClasificacion += 1
+                                    partidosEmpatados += 1
+                                indiceFilaDato += 1
+                                totalPuntosAFavor += puntoEquipo[fila][columna]
+                                if type(puntoEquipo[indiceFilaDato-1][indiceColumnaDato] ) == int:
+                                    totalPuntosEnContra += puntoEquipo[indiceFilaDato-1][indiceColumnaDato]    
+                        totalDiferenciaDePuntos = totalPuntosAFavor - totalPuntosEnContra
+                        listaPorEquipo.append(partidosGanados)
+                        listaPorEquipo.append(partidosEmpatados)
+                        listaPorEquipo.append(partidosPerdidos)
+                        listaPorEquipo.append(sumaDeClasificacion)
+                        listaPorEquipo.append(totalPuntosAFavor)
+                        listaPorEquipo.append(totalPuntosEnContra)
+                        listaPorEquipo.append(totalDiferenciaDePuntos)
+                        listaDeClasificacion.append(listaPorEquipo)
+                    estadoActual["listaDeClasificacion"] = listaDeClasificacion
+                    return listaDeClasificacion
+                    
+>>>>>>> 125379305b6d9b35717d3e4b92de871debd5d834
                 def ordenarEquipos():
                     equipos = estadisticasTablas()
                     equiposOrdenados = [[]]
@@ -254,6 +307,7 @@ def ingresoEquipos (event):
                             if equipos[posicionEquipo][4] < equiposOrdenados[-equipoComparacion][4]:
                                 equiposOrdenados.append[0](equipos[posicionEquipo])
                                 break
+<<<<<<< HEAD
                             elif equipos[posicionEquipo][4] > equiposOrdenados[equipoComparacion][4]:
                                 equiposOrdenados.append[0](equipos[posicionEquipo])
                         break
@@ -263,6 +317,13 @@ def ingresoEquipos (event):
                     Equipo=[(Lista[indice][0])]
                     return nombresDeEquiposOrdenados(NombresOrdenados+Equipo,Lista,indice+1)
                     
+=======
+                        if equipos[posicionEquipo] not in equiposOrdenados:
+                            equiposOrdenados.append(equipos[posicionEquipo])
+                    estadoActual["equiposOrdenados"] = equiposOrdenados
+                    return equiposOrdenados
+
+>>>>>>> 125379305b6d9b35717d3e4b92de871debd5d834
                 def estadisticasDelCampeonato(event):
                     equiposOrdenados = ordenarEquipos()
                     codigo = estadoActual["codigo"] 
@@ -291,6 +352,35 @@ def ingresoEquipos (event):
         t = Table(winMatrizPuntos)
         cantidadEquiposVentana.mainloop()
 
+<<<<<<< HEAD
+=======
+
+# TABLA DE RESULTADOS
+    def puntajeAleatorio(): 
+        return random.randint(0,150)
+
+    def nombresDeEquiposOrdenados(NombresOrdenados=[],Lista=estadoActual["equiposOrdenados"],indice=0):
+        if(indice>=len(Lista)):
+            return NombresOrdenados
+        Equipo=[(Lista[indice][0])]
+        return nombresDeEquiposOrdenados(NombresOrdenados+Equipo,Lista,indice+1)
+
+    def Tabla(equiposDic=nombresDeEquiposOrdenados,d=[["Equipo","Puntos Anotados","Equipo","Puntos Anotados","Ganador"]],inicio=0,Equipos=[],EquipoGanador=""):
+        if(inicio>=len(equiposDic)):
+            return d
+        Equipo1=equiposDic[inicio]
+        Equipo2=equiposDic[inicio+1]
+        puntaje1=puntajeAleatorio()
+        puntaje2=puntajeAleatorio()
+        if(puntaje1>puntaje2):
+            EquipoGanador=Equipo1
+        elif(puntaje2>puntaje1):
+            EquipoGanador=Equipo2
+        if(puntaje1==puntaje2):
+            puntaje1=puntajeAleatorio()
+        return Tabla(equiposDic,d+([[Equipo1,puntaje1,Equipo2,puntaje2,EquipoGanador]]),inicio+2,[],"")
+
+>>>>>>> 125379305b6d9b35717d3e4b92de871debd5d834
     def cantidadEquiposAFinal(event):
         winVentana6= tk.Toplevel(cantidadEquiposVentana)
         winVentana6.resizable(False, False)
