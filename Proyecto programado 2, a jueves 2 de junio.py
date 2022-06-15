@@ -12,9 +12,6 @@ from tkinter import messagebox
 from typing import Any, Hashable,Iterable,Optional
 import random
 
-def puntajeAleatorio(): 
-    return random.randint(0,150)
-
 # DICCIONARIO DE ALMACENAMIENTO
 estadoActual = {
 "indice" : -1,
