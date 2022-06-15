@@ -21,6 +21,7 @@ estadoActual = {
 "codigo": 0, 
 "listaDeClasificacion" : NULL, 
 "equiposOrdenados": NULL,
+"nombresOrdenados":NULL,
 "datosTorneo": NULL
 } 
 
