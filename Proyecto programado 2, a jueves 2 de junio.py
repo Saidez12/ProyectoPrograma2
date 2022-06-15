@@ -11,19 +11,40 @@ from tkinter import *
 from tkinter import messagebox
 from typing import Any, Hashable,Iterable,Optional
 import random
+# Proyecto programado 2
+# Rubén David Abarca Ramírez - 2022017072
+# Saimon Hernández Venegas - 2022090508
+# Daniel Rubén Arce Madriz - 2022200437
 
-def puntajeAleatorio(): 
-    return random.randint(0,150)
+
+from asyncio.windows_events import NULL
+import tkinter as tk
+import pickle
+from tkinter import *
+from tkinter import messagebox
+from typing import Any, Hashable,Iterable,Optional
+import random
 
 # DICCIONARIO DE ALMACENAMIENTO
-estadoActual = {"indice" : -1,"equipos" : NULL, "equipoActual": NULL, "codigo": 0, "listaDeClasificacion" : NULL, "equiposOrdenados": NULL} 
+estadoActual = {
+"indice" : -1,
+"equipos" : NULL, 
+"equipoActual": NULL, 
+"codigo": 0, 
+"listaDeClasificacion" : NULL, 
+"equiposOrdenados": NULL,
+"datosTorneo": NULL
+} 
 
+
+# VENTANA MADRE
 cantidadEquiposVentana = tk.Tk()
-
 cantidadEquiposVentana.resizable(False, False)
 cantidadEquiposVentana.geometry("275x125")
 cantidadEquiposVentana.title("Equipos")
 
+
+# INGRESO DE EQUIPOS
 def ingresoEquipos (event):
     infoEquiposVentana= tk.Toplevel(cantidadEquiposVentana)
     infoEquiposVentana.protocol("WM_DELETE_WINDOW", on_closing)
@@ -33,7 +54,38 @@ def ingresoEquipos (event):
     x = cantidadEquiposVentana.winfo_x()
     y = cantidadEquiposVentana.winfo_y()
     infoEquiposVentana.geometry("+%d+%d" % (x+75, y+75))
+    entNombreEquipo = tk.Entry(
+        infoEquiposVentana, fg="White", bg="Black", width=10)
+    entLugarProcedencia = tk.Entry(
+        infoEquiposVentana, fg="White", bg="Black", width=10)
+    entCantidadJugadores = tk.Entry(
+        infoEquiposVentana, fg="White", bg="Black", width=10)
+    entValorPlanilla = tk.Entry(
+        infoEquiposVentana, fg="White", bg="Black", width=10)
+    lblNombreEquipo = tk.Label(
+        infoEquiposVentana, text="Indique el nombre del equipo: ")
+    lblLugarProcedencia = tk.Label(
+        infoEquiposVentana, text="Indique el lugar de procedencia del equipo: ")
+    lblCantidadJugadores = tk.Label(
+        infoEquiposVentana, text="Indique la cantidad de jugadores: ")
+    lblValorPlanilla = tk.Label(
+        infoEquiposVentana, text="Indique el valor de la planilla: ")
+    lblNombreEquipo.place(x=10, y=25)
+    entNombreEquipo.place(x=330, y=25)
+    lblLugarProcedencia.place(x=10, y=50)
+    entLugarProcedencia.place(x=330, y=50)
+    lblCantidadJugadores.place(x=10, y=75)
+    entCantidadJugadores.place(x=330, y=75)
+    lblValorPlanilla.place(x=10, y=100)
+    entValorPlanilla.place(x=330, y=100)
+    btnContinuarIngreso = tk.Button(
+        infoEquiposVentana, text="CONTINUAR", bg="#926359", fg="#FFFFFF")
+    btnContinuarIngreso.place(x=175, y=175)
+    btnContinuarIngreso.unbind("<Button-1>")
+    equipoActual  = estadoActual["equipoActual"]
 
+
+# ELIMINACIÓN DE EQUIPOS
     def eliminarEquipo(event):
         winVentana5= tk.Toplevel(cantidadEquiposVentana)
         winVentana5.resizable(False, False)
@@ -83,7 +135,7 @@ def ingresoEquipos (event):
                 messagebox.showinfo(message="Debe ingresar un equipo que se encuentre en el tablero de punto anotados")
 
 
-
+# GUARDADO DE EQUIPOS
     def obtenerYGuardar():
         try:
             cantidadJugadores = int(entCantidadJugadores.get())
@@ -109,10 +161,6 @@ def ingresoEquipos (event):
         else:
             intermedio()
 
-    def editarEquipo(event):
-        almacenarModificaciones()
-        intermedio()
-
     def guardarDiccionario (cantidadJugadores,procedencia, nombre, valorPlanilla):
         equipos = estadoActual["equipos"]
         codigo = estadoActual["codigo"]
@@ -126,6 +174,7 @@ def ingresoEquipos (event):
         print(equipos)
 
 
+# GENERACIÓN DE PUNTAJES
     def puntajeAletorio(): 
         return random.randint(0,150)
 
@@ -159,7 +208,7 @@ def ingresoEquipos (event):
         btnResultados= tk.Button(
         winMatrizPuntos, text="RESULTADOS", bg="#926359", fg="#FFFFFF")
         btnResultados.place(x=650, y=425)
-        btnResultados.bind("<Button-1>", estadisticasTablas)
+        #btnResultados.bind("<Button-1>", estadisticasTablas)
 
         class Table:
             def __init__(self, winMatrizPuntos):
@@ -231,17 +280,16 @@ def ingresoEquipos (event):
                         listaDeClasificacion.append(listaPorEquipo)
                     estadoActual["listaDeClasificacion"] = listaDeClasificacion
                     return listaDeClasificacion
-                    
+
                 def ordenarEquipos():
                     equipos = estadisticasTablas()
-                    equiposOrdenados = [[]]
-                    equiposOrdenados.append(equipos[1])
+                    equiposOrdenados = []
+                    equiposOrdenados.append(equipos[0])
                     equipos = equipos[1:]
                     for posicionEquipo in range(len(equipos)):
-                        indice = 0
                         for equipoComparacion in range(len(equiposOrdenados)):
-                            if equipos[posicionEquipo][4] < equiposOrdenados[-equipoComparacion][4]:
-                                equiposOrdenados.append[0](equipos[posicionEquipo])
+                            if equipos[posicionEquipo][4] > equiposOrdenados[equipoComparacion][4]:
+                                equiposOrdenados.insert(equipoComparacion, equipos[posicionEquipo])
                                 break
                         if equipos[posicionEquipo] not in equiposOrdenados:
                             equiposOrdenados.append(equipos[posicionEquipo])
@@ -269,7 +317,6 @@ def ingresoEquipos (event):
                             indice+=1
                             continue
                         
-        
         lst = EquiposT
         total_rows = len(lst)
         total_columns = len(lst[0])
@@ -281,13 +328,14 @@ def ingresoEquipos (event):
     def puntajeAleatorio(): 
         return random.randint(0,150)
 
-    def nombresDeEquiposOrdenados(NombresOrdenados=[],Lista=estadoActual["equiposOrdenados"],indice=0):
+    def nombresDeEquiposOrdenados(nombresOrdenados=[],Lista=estadoActual["equiposOrdenados"],indice=0):
         if(indice>=len(Lista)):
-            return NombresOrdenados
+            estadoActual["nombresOrdenados"] = nombresOrdenados
+            return nombresOrdenados
         Equipo=[(Lista[indice][0])]
-        return nombresDeEquiposOrdenados(NombresOrdenados+Equipo,Lista,indice+1)
+        return nombresDeEquiposOrdenados(nombresOrdenados+Equipo,Lista,indice+1)
 
-    def Tabla(equiposDic=nombresDeEquiposOrdenados,d=[["Equipo","Puntos Anotados","Equipo","Puntos Anotados","Ganador"]],inicio=0,Equipos=[],EquipoGanador=""):
+    def Tabla(equiposDic=estadoActual["nombresOrdenados"] ,d=[["Equipo","Puntos Anotados","Equipo","Puntos Anotados","Ganador"]],inicio=0,Equipos=[],EquipoGanador=""):
         if(inicio>=len(equiposDic)):
             return d
         Equipo1=equiposDic[inicio]
@@ -321,7 +369,7 @@ def ingresoEquipos (event):
         def iniciarFinal(event):
             winMatrizFinal = tk.Toplevel(winVentana6)
             winMatrizFinal.resizable(False, False)
-            winMatrizFinal.geometry("400x500")
+            winMatrizFinal.geometry("1250x500")
             winMatrizFinal.title("Tabla de Fase Final de campeonato")
             x = 100
             y = 200
@@ -335,7 +383,7 @@ def ingresoEquipos (event):
                                                 font=('Arial', 12, 'bold'))
                                 self.e.grid(row=i, column=j)
                                 self.e.insert(END, lst[i][j])
-            lst = Tabla(nombresDeEquiposOrdenados())
+            lst = Tabla()
             total_rows = len(lst)
             total_columns = len(lst[0])
             t = Table(winMatrizFinal)
@@ -343,7 +391,8 @@ def ingresoEquipos (event):
         btnFinal.place(x=25, y=75)
         btnFinal.bind("<Button-1>",iniciarFinal )
 
-    
+
+# LOBBY
     def intermedio():
         winVentana3= tk.Toplevel(infoEquiposVentana)
         winVentana3.resizable(False, False)
@@ -370,6 +419,13 @@ def ingresoEquipos (event):
         btnTablaResultados.place(x=150, y=125)
         btnTablaResultados.bind("<Button-1>", matrizEquipos)
         btnIniciar.bind("<Button-1>", cantidadEquiposAFinal)
+
+
+
+# MODIFICACIONES DE EQUIPOS
+    def editarEquipo(event):
+        almacenarModificaciones()
+        intermedio()
 
     def almacenarModificaciones():
         codigo = estadoActual["codigo"]
@@ -408,7 +464,6 @@ def ingresoEquipos (event):
             winVentana4, text="MODIFICAR", bg="#926359", fg="#FFFFFF")
         btnModificarEquipo.place(x=25, y=75)
 
-
         def buscarEquipo (event):
             try:
                 nombreEquipoAModificar = entEquipoAModificar.get()
@@ -429,36 +484,8 @@ def ingresoEquipos (event):
                     continue
         btnModificarEquipo.bind("<Button-1>", buscarEquipo)
 
-    entNombreEquipo = tk.Entry(
-        infoEquiposVentana, fg="White", bg="Black", width=10)
-    entLugarProcedencia = tk.Entry(
-        infoEquiposVentana, fg="White", bg="Black", width=10)
-    entCantidadJugadores = tk.Entry(
-        infoEquiposVentana, fg="White", bg="Black", width=10)
-    entValorPlanilla = tk.Entry(
-        infoEquiposVentana, fg="White", bg="Black", width=10)
-    lblNombreEquipo = tk.Label(
-        infoEquiposVentana, text="Indique el nombre del equipo: ")
-    lblLugarProcedencia = tk.Label(
-        infoEquiposVentana, text="Indique el lugar de procedencia del equipo: ")
-    lblCantidadJugadores = tk.Label(
-        infoEquiposVentana, text="Indique la cantidad de jugadores: ")
-    lblValorPlanilla = tk.Label(
-        infoEquiposVentana, text="Indique el valor de la planilla: ")
-    lblNombreEquipo.place(x=10, y=25)
-    entNombreEquipo.place(x=330, y=25)
-    lblLugarProcedencia.place(x=10, y=50)
-    entLugarProcedencia.place(x=330, y=50)
-    lblCantidadJugadores.place(x=10, y=75)
-    entCantidadJugadores.place(x=330, y=75)
-    lblValorPlanilla.place(x=10, y=100)
-    entValorPlanilla.place(x=330, y=100)
-    btnContinuarIngreso = tk.Button(
-        infoEquiposVentana, text="CONTINUAR", bg="#926359", fg="#FFFFFF")
-    btnContinuarIngreso.place(x=175, y=175)
-    btnContinuarIngreso.unbind("<Button-1>")
-    equipoActual  = estadoActual["equipoActual"]
 
+# INICIO DEL PROGRAMA
     if(equipoActual == NULL):
         try:
             cantidadEquipos = int(entCantidadEquipos.get())
@@ -476,17 +503,13 @@ def ingresoEquipos (event):
         btnContinuarIngreso.bind("<Button-1>", editarEquipo)
 
 
-
-
-
+# CERRADO DE PESTAÑAS
 def on_closing():
     if messagebox.askokcancel("Salir", "Desea salir de la aplicación?"):
         cantidadEquiposVentana.quit()
 
 
-estadoActual = {"indice" : -1,"equipos" : NULL, "equipoActual": NULL, "codigo": 0, "listaDeClasificacion" : NULL}
-
-
+# VENTANA INICIAL
 cantidadEquiposVentana.title("Ingreso al campeonato")
 cantidadEquiposVentana.eval("tk::PlaceWindow . center")
 entCantidadEquipos = tk.Entry(
