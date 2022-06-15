@@ -195,10 +195,7 @@ def ingresoEquipos (event):
             winMatrizPuntos, text="ELIMINAR EQUIPO", bg="#926359", fg="#FFFFFF")
         btnEliminarEquipo.place(x=25, y=125)
         btnEliminarEquipo.bind("<Button-1>", eliminarEquipo)
-        btnResultados= tk.Button(
-        winMatrizPuntos, text="RESULTADOS", bg="#926359", fg="#FFFFFF")
-        btnResultados.place(x=650, y=425)
-        #btnResultados.bind("<Button-1>", )
+
 
         class Table:
             def __init__(self, winMatrizPuntos):
@@ -295,13 +292,13 @@ def ingresoEquipos (event):
                     y = 200
                     winStats.geometry("+%d+%d" % (x+75, y+75))
                     class Table:
-                        def __init__(self, root):
+                        def __init__(self, winStats):
                             puntoEquipo = [] 
                             dataPorEquipo = []
                             for iFila in range(total_rows):
                                 dataPorEquipo = []
                                 for iColumna in range(total_columns):
-                                    self.e = Entry(root, width=18, fg='black',
+                                    self.e = Entry(winStats, width=18, fg='black',
                                                     font=('Arial', 12, 'bold'))
                                     self.e.grid(row=iFila, column=iColumna)
                                     self.e.insert(END, lst[iFila][iColumna])
@@ -310,7 +307,15 @@ def ingresoEquipos (event):
                     total_rows = len(lst)
                     total_columns = len(lst[0])
                     t = Table(winStats)
+                    winStats.mainloop()
                 
+                btnResultados= tk.Button(
+                winMatrizPuntos, text="RESULTADOS", bg="#926359", fg="#FFFFFF")
+                btnResultados.place(x=650, y=425)
+                btnResultados.bind("<Button-1>", verTablaEstadisticas)                
+                
+                
+                #Campeonato
                 def estadisticasDelCampeonato(event):
                     equiposOrdenados = ordenarEquipos()
                     codigo = estadoActual["codigo"] 
