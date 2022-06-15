@@ -14,7 +14,15 @@ import random
 
 
 # DICCIONARIO DE ALMACENAMIENTO
-estadoActual = {"indice" : -1,"equipos" : NULL, "equipoActual": NULL, "codigo": 0, "listaDeClasificacion" : NULL, "equiposOrdenados": NULL} 
+estadoActual = {
+"indice" : -1,
+"equipos" : NULL, 
+"equipoActual": NULL, 
+"codigo": 0, 
+"listaDeClasificacion" : NULL, 
+"equiposOrdenados": NULL,
+"datosTorneo": NULL
+} 
 
 
 # VENTANA MADRE
