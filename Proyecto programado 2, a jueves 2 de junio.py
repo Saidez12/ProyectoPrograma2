@@ -22,7 +22,7 @@ estadoActual = {
 "codigo": 0, 
 "listaDeClasificacion" : NULL, 
 "equiposOrdenados": NULL,
-"nombresOrdenados":NULL,
+"nombresOrdenados": NULL,
 "datosTorneo": NULL
 } 
 
@@ -539,5 +539,6 @@ btnContinuar.place(x=100, y=75)
 btnContinuar.bind("<Button-1>", ingresoEquipos)
 cantidadEquiposVentana.protocol("WM_DELETE_WINDOW", on_closing)
 cantidadEquiposVentana.mainloop()
+
 
 
