@@ -12,6 +12,7 @@ from tkinter import messagebox
 from typing import Any, Hashable,Iterable,Optional
 import random
 
+
 # DICCIONARIO DE ALMACENAMIENTO
 estadoActual = {"indice" : -1,"equipos" : NULL, "equipoActual": NULL, "codigo": 0, "listaDeClasificacion" : NULL, "equiposOrdenados": NULL} 
 
