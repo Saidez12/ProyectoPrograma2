@@ -408,6 +408,7 @@ def ingresoEquipos (event):
         btnIniciar.bind("<Button-1>", cantidadEquiposAFinal)
 
 
+
 # MODIFICACIONES DE EQUIPOS
     def editarEquipo(event):
         almacenarModificaciones()
