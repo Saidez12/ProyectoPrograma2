@@ -3,7 +3,6 @@
 # Saimon Hernández Venegas - 2022090508
 # Daniel Rubén Arce Madriz - 2022200437
 
-
 from asyncio.windows_events import NULL
 import tkinter as tk
 import pickle
