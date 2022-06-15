@@ -11,19 +11,6 @@ from tkinter import *
 from tkinter import messagebox
 from typing import Any, Hashable,Iterable,Optional
 import random
-# Proyecto programado 2
-# Rubén David Abarca Ramírez - 2022017072
-# Saimon Hernández Venegas - 2022090508
-# Daniel Rubén Arce Madriz - 2022200437
-
-
-from asyncio.windows_events import NULL
-import tkinter as tk
-import pickle
-from tkinter import *
-from tkinter import messagebox
-from typing import Any, Hashable,Iterable,Optional
-import random
 
 # DICCIONARIO DE ALMACENAMIENTO
 estadoActual = {
