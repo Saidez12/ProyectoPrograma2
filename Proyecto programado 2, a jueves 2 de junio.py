@@ -13,6 +13,7 @@ from typing import Any, Hashable,Iterable,Optional
 import random
 import winsound
 
+
 # DICCIONARIO DE ALMACENAMIENTO
 estadoActual = {
 "indice" : -1,
