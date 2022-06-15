@@ -11,6 +11,7 @@ from tkinter import *
 from tkinter import messagebox
 from typing import Any, Hashable,Iterable,Optional
 import random
+import winsound
 
 # DICCIONARIO DE ALMACENAMIENTO
 estadoActual = {
@@ -195,7 +196,7 @@ def ingresoEquipos (event):
         btnResultados= tk.Button(
         winMatrizPuntos, text="RESULTADOS", bg="#926359", fg="#FFFFFF")
         btnResultados.place(x=650, y=425)
-        #btnResultados.bind("<Button-1>", estadisticasTablas)
+        #btnResultados.bind("<Button-1>", )
 
         class Table:
             def __init__(self, winMatrizPuntos):
@@ -283,6 +284,31 @@ def ingresoEquipos (event):
                     estadoActual["equiposOrdenados"] = equiposOrdenados
                     return equiposOrdenados
 
+                def verTablaEstadisticas(event):
+                    winStats= tk.Toplevel(cantidadEquiposVentana)
+                    winStats.resizable(False, False)
+                    winStats.geometry("1400x500")
+                    winStats.title("Equipos a la final")
+                    x = 100
+                    y = 200
+                    winStats.geometry("+%d+%d" % (x+75, y+75))
+                    class Table:
+                        def __init__(self, root):
+                            puntoEquipo = [] 
+                            dataPorEquipo = []
+                            for iFila in range(total_rows):
+                                dataPorEquipo = []
+                                for iColumna in range(total_columns):
+                                    self.e = Entry(root, width=18, fg='black',
+                                                    font=('Arial', 12, 'bold'))
+                                    self.e.grid(row=iFila, column=iColumna)
+                                    self.e.insert(END, lst[iFila][iColumna])
+                    lst = [["Equipo", "Partidos Ganados", "Partidos Empatados", "Partidos Perdidos", "Puntaje", "Puntos A Favor", "Puntos En Contra", "Diferencia De Puntos"], \
+                        ordenarEquipos()]
+                    total_rows = len(lst)
+                    total_columns = len(lst[0])
+                    t = Table(winStats)
+                
                 def estadisticasDelCampeonato(event):
                     equiposOrdenados = ordenarEquipos()
                     codigo = estadoActual["codigo"] 
