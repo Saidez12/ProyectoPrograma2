@@ -15,7 +15,13 @@ import random
 def puntajeAleatorio(): 
     return random.randint(0,150)
 
-def Tabla(equiposDic,d=[["Equipo","Puntos Anotados","Equipo","Puntos Anotados","Ganador"]],inicio=0,Equipos=[],EquipoGanador=""):
+def nombresDeEquiposOrdenados(NombresOrdenados=[],Lista=ordenarEquipos(),indice=0):
+    if(indice>=len(Lista)):
+        return NombresOrdenados
+    Equipo=[(Lista[indice][0])]
+    return nombresDeEquiposOrdenados(NombresOrdenados+Equipo,Lista,indice+1)
+
+def Tabla(equiposDic=nombresDeEquiposOrdenados,d=[["Equipo","Puntos Anotados","Equipo","Puntos Anotados","Ganador"]],inicio=0,Equipos=[],EquipoGanador=""):
     if(inicio>=len(equiposDic)):
         return d
     Equipo1=equiposDic[inicio]
@@ -257,14 +263,8 @@ def ingresoEquipos (event):
                             elif equipos[posicionEquipo][4] > equiposOrdenados[equipoComparacion][4]:
                                 equiposOrdenados.append[0](equipos[posicionEquipo])
                         break
-                def nombresDeEquiposOrdenados(NombresOrdenados=[],Lista=ordenarEquipos(),indice=0):
-                    if(indice>=len(Lista)):
-                        return NombresOrdenados
-                    Equipo=[(Lista[indice][0])]
-                    return nombresDeEquiposOrdenados(NombresOrdenados+Equipo,Lista,indice+1)
                     
                 def estadisticasDelCampeonato(event):
-                    equiposOrdenados = ordenarEquipos()
                     codigo = estadoActual["codigo"] 
                     equipos3= estadoActual["equipos"]
                     estadisticas = estadoActual["listaDeClasificacion"]
@@ -291,6 +291,7 @@ def ingresoEquipos (event):
         t = Table(winMatrizPuntos)
         cantidadEquiposVentana.mainloop()
 
+#Requerimiento 2.4
     def cantidadEquiposAFinal(event):
         winVentana6= tk.Toplevel(cantidadEquiposVentana)
         winVentana6.resizable(False, False)
@@ -306,7 +307,6 @@ def ingresoEquipos (event):
         entEquiposFinal = tk.Entry(
             winVentana6, fg="White", bg="Black", width=15)
         entEquiposFinal.place(x=125, y=55)
-        
         def iniciarFinal(event):
             winMatrizFinal = tk.Toplevel(winVentana6)
             winMatrizFinal.resizable(False, False)
@@ -324,7 +324,7 @@ def ingresoEquipos (event):
                                                 font=('Arial', 12, 'bold'))
                                 self.e.grid(row=i, column=j)
                                 self.e.insert(END, lst[i][j])
-            lst = Tabla(nombresDeEquiposOrdenados())
+            lst = Tabla()
             total_rows = len(lst)
             total_columns = len(lst[0])
             t = Table(winMatrizFinal)
