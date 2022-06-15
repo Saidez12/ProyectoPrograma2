@@ -14,7 +14,8 @@ import random
 
 
 # DICCIONARIO DE ALMACENAMIENTO
-estadoActual = {"indice" : -1,"equipos" : NULL, "equipoActual": NULL, "codigo": 0, "listaDeClasificacion" : NULL, "equiposOrdenados": NULL} 
+estadoActual = {"indice" : -1,"equipos" : NULL, "equipoActual": NULL, "codigo": 0, "listaDeClasificacion" : NULL, "equiposOrdenados": [], "nombresOrdenados" :  NULL}
+ 
 
 
 # VENTANA MADRE
@@ -260,7 +261,7 @@ def ingresoEquipos (event):
                         listaDeClasificacion.append(listaPorEquipo)
                     estadoActual["listaDeClasificacion"] = listaDeClasificacion
                     return listaDeClasificacion
-                    
+
                 def ordenarEquipos():
                     equipos = estadisticasTablas()
                     equiposOrdenados = []
@@ -297,7 +298,6 @@ def ingresoEquipos (event):
                             indice+=1
                             continue
                         
-        
         lst = EquiposT
         total_rows = len(lst)
         total_columns = len(lst[0])
@@ -309,13 +309,14 @@ def ingresoEquipos (event):
     def puntajeAleatorio(): 
         return random.randint(0,150)
 
-    def nombresDeEquiposOrdenados(NombresOrdenados=[],Lista=estadoActual["equiposOrdenados"],indice=0):
+    def nombresDeEquiposOrdenados(nombresOrdenados=[],Lista=estadoActual["equiposOrdenados"],indice=0):
         if(indice>=len(Lista)):
-            return NombresOrdenados
+            estadoActual["nombresOrdenados"] = nombresOrdenados
+            return nombresOrdenados
         Equipo=[(Lista[indice][0])]
-        return nombresDeEquiposOrdenados(NombresOrdenados+Equipo,Lista,indice+1)
+        return nombresDeEquiposOrdenados(nombresOrdenados+Equipo,Lista,indice+1)
 
-    def Tabla(equiposDic=nombresDeEquiposOrdenados,d=[["Equipo","Puntos Anotados","Equipo","Puntos Anotados","Ganador"]],inicio=0,Equipos=[],EquipoGanador=""):
+    def Tabla(equiposDic=estadoActual["nombresOrdenados"] ,d=[["Equipo","Puntos Anotados","Equipo","Puntos Anotados","Ganador"]],inicio=0,Equipos=[],EquipoGanador=""):
         if(inicio>=len(equiposDic)):
             return d
         Equipo1=equiposDic[inicio]
