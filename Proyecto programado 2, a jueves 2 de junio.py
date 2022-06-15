@@ -11,9 +11,9 @@ from tkinter import *
 from tkinter import messagebox
 from typing import Any, Hashable,Iterable,Optional
 import random
+def puntajeAleatorio(): 
+    return random.randint(0,150)
 
-
-<<<<<<< HEAD
 def nombresDeEquiposOrdenados(NombresOrdenados=[],Lista=ordenarEquipos(),indice=0):
     if(indice>=len(Lista)):
         return NombresOrdenados
@@ -34,10 +34,6 @@ def Tabla(equiposDic=nombresDeEquiposOrdenados,d=[["Equipo","Puntos Anotados","E
     if(puntaje1==puntaje2):
         puntaje1=puntajeAleatorio()
     return Tabla(equiposDic,d+([[Equipo1,puntaje1,Equipo2,puntaje2,EquipoGanador]]),inicio+2,[],"")
-=======
-# DICCIONARIO DE ALMACENAMIENTO
-estadoActual = {"indice" : -1,"equipos" : NULL, "equipoActual": NULL, "codigo": 0, "listaDeClasificacion" : NULL} 
->>>>>>> be181978bc2cb5c5f6079eff3b2747e66ad84242
 
 
 # VENTANA MADRE
@@ -294,17 +290,10 @@ def ingresoEquipos (event):
                             if equipos[posicionEquipo][4] > equiposOrdenados[equipoComparacion][4]:
                                 equiposOrdenados.insert(equipoComparacion, equipos[posicionEquipo])
                                 break
-<<<<<<< HEAD
-                            elif equipos[posicionEquipo][4] > equiposOrdenados[equipoComparacion][4]:
-                                equiposOrdenados.append[0](equipos[posicionEquipo])
-                        break
-                    
-=======
                         if equipos[posicionEquipo] not in equiposOrdenados:
                             equiposOrdenados.append(equipos[posicionEquipo])
                     return equiposOrdenados
 
->>>>>>> be181978bc2cb5c5f6079eff3b2747e66ad84242
                 def estadisticasDelCampeonato(event):
                     codigo = estadoActual["codigo"] 
                     equipos3= estadoActual["equipos"]
@@ -332,31 +321,9 @@ def ingresoEquipos (event):
         t = Table(winMatrizPuntos)
         cantidadEquiposVentana.mainloop()
 
-<<<<<<< HEAD
-#Requerimiento 2.4
-=======
 
 # TABLA DE RESULTADOS
-    def puntajeAleatorio(): 
-        return random.randint(0,150)
 
-    def Tabla(equiposDic=["Tigres","GOl","Koala","loba","JUlio","HULK"],inicio=0,Equipos=[],d=[["Equipo","Puntos Anotados","Equipo","Puntos Anotados","Ganador"]]):
-        while(inicio<len(equiposDic)):
-            Equipos.extend([equiposDic[inicio],puntajeAleatorio()])+Tabla(equiposDic,inicio)
-            Equipos.extend([equiposDic[inicio+1],puntajeAleatorio()])
-            if(Equipos[1]>Equipos[3]):
-                EquipoGanador=Equipos[0]
-            else:
-                EquipoGanador=Equipos[2]
-            if(Equipos[1]==Equipos[3]):
-                Equipos[1]=puntajeAleatorio()
-            Equipos.append(EquipoGanador)
-            d+=[Equipos]
-            Equipos=[]
-            inicio+=2
-        return d
-
->>>>>>> be181978bc2cb5c5f6079eff3b2747e66ad84242
     def cantidadEquiposAFinal(event):
         winVentana6= tk.Toplevel(cantidadEquiposVentana)
         winVentana6.resizable(False, False)
