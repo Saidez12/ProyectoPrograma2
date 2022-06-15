@@ -291,7 +291,6 @@ def ingresoEquipos (event):
         t = Table(winMatrizPuntos)
         cantidadEquiposVentana.mainloop()
 
-#Requerimiento 2.4
     def cantidadEquiposAFinal(event):
         winVentana6= tk.Toplevel(cantidadEquiposVentana)
         winVentana6.resizable(False, False)
@@ -325,7 +324,7 @@ def ingresoEquipos (event):
                                                 font=('Arial', 12, 'bold'))
                                 self.e.grid(row=i, column=j)
                                 self.e.insert(END, lst[i][j])
-            lst = Tabla(nombresDeEquiposOrdenados)
+            lst = Tabla(nombresDeEquiposOrdenados())
             total_rows = len(lst)
             total_columns = len(lst[0])
             t = Table(winMatrizFinal)
