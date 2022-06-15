@@ -12,16 +12,11 @@ from tkinter import messagebox
 from typing import Any, Hashable,Iterable,Optional
 import random
 
+def puntajeAleatorio(): 
+    return random.randint(0,150)
+
 # DICCIONARIO DE ALMACENAMIENTO
-estadoActual = {
-"indice" : -1,
-"equipos" : NULL, 
-"equipoActual": NULL, 
-"codigo": 0, 
-"listaDeClasificacion" : NULL, 
-"equiposOrdenados": NULL,
-"datosTorneo": NULL
-} 
+estadoActual = {"indice" : -1,"equipos" : NULL, "equipoActual": NULL, "codigo": 0, "listaDeClasificacion" : NULL, "equiposOrdenados": NULL} 
 
 cantidadEquiposVentana = tk.Tk()
 
@@ -164,7 +159,7 @@ def ingresoEquipos (event):
         btnResultados= tk.Button(
         winMatrizPuntos, text="RESULTADOS", bg="#926359", fg="#FFFFFF")
         btnResultados.place(x=650, y=425)
-        #btnResultados.bind("<Button-1>", estadisticasTablas)
+        btnResultados.bind("<Button-1>", estadisticasTablas)
 
         class Table:
             def __init__(self, winMatrizPuntos):
@@ -348,7 +343,7 @@ def ingresoEquipos (event):
         btnFinal.place(x=25, y=75)
         btnFinal.bind("<Button-1>",iniciarFinal )
 
-
+    
     def intermedio():
         winVentana3= tk.Toplevel(infoEquiposVentana)
         winVentana3.resizable(False, False)
