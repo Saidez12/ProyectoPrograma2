@@ -454,7 +454,7 @@ def ingresoEquipos (event):
                         for y in range(len(equipos3)):
                             codigo = y
                             equipos4= list(equipos3[codigo].values())
-                            lugarProcendencia.append(equipos4[3]) 
+                            lugarProcendencia.append(equipos4[1]) 
 
         lst = EquiposT
         total_rows = len(lst)
