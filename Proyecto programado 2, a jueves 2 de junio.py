@@ -406,20 +406,11 @@ def ingresoEquipos (event):
                     equipos3= estadoActual["equipos"]
                     estadisticas = estadoActual["listaDeClasificacion"]
                     valorPlanillaLista = []
-                    indice = 1
                     for y in range(len(equipos3)):
                         codigo = y
                         equipos4= list(equipos3[codigo].values())
                         valorPlanillaLista.append(equipos4[3]) 
-                    valoresPlanillas = []
-                    for podio in valorPlanillaLista:
-                        if (valorPlanillaLista[podio] > valorPlanillaLista(indice)):
-                            valoresPlanillas.append(valorPlanillaLista[podio]) 
-                        elif(valorPlanillaLista[podio] < valorPlanillaLista(indice)):
-                            valoresPlanillas.append(valorPlanillaLista(indice))
-                        else:
-                            indice+=1
-                            continue
+                    valorPlanillaLista.sort(reverse = True)
 
 
         lst = EquiposT
