@@ -316,7 +316,14 @@ def ingresoEquipos (event):
                         Equipo2=equiposDic[inicio+1]
                         puntaje1=puntajeAleatorio()
                         puntaje2=puntajeAleatorio()
+                        if(puntaje1>puntaje2):
+                            EquipoGanador=Equipo1
+                        elif(puntaje1<puntaje2):
+                            EquipoGanador=Equipo2
+                        elif(puntaje1==puntaje2):
+                            puntaje1=puntajeAleatorio()
                         return Tabla(NumeroDeEquiposEnLaFinal,equiposDic,d+([[Equipo1,puntaje1,Equipo2,puntaje2,EquipoGanador]]),inicio+2,"")
+
 
                     def cantidadEquiposAFinal(event):
                         winVentana6= tk.Toplevel(winStats)
@@ -338,13 +345,15 @@ def ingresoEquipos (event):
                             state=True
                             NumeroDeEquiposEnLaFinal=entEquiposFinal.get()
                             NumeroDeEquiposEnLaFinal=int(NumeroDeEquiposEnLaFinal)
-                            print(NumeroDeEquiposEnLaFinal)
                             equipos10=ordenarEquipos()
                             if(NumeroDeEquiposEnLaFinal%2!=0):
                                 messagebox.showinfo(message="El Numero de equipos en la final debe ser un número par")
                                 state=False
                             if(NumeroDeEquiposEnLaFinal>len(equipos10)):
                                 messagebox.showinfo(message="El número de equipos en la final debe ser un número igual o menor a la cantidad inicial de equipos")
+                                state=False
+                            if(NumeroDeEquiposEnLaFinal==0):
+                                messagebox.showinfo(message="El número de equipos en la final debe ser un número mayor a cero")
                                 state=False
                             if(state==True):
                                 winMatrizFinal = tk.Toplevel(winVentana6)
@@ -364,6 +373,17 @@ def ingresoEquipos (event):
                                                     self.e.grid(row=i, column=j)
                                                     self.e.insert(END, lst[i][j])
                                 lst = Tabla(NumeroDeEquiposEnLaFinal)
+                                if(NumeroDeEquiposEnLaFinal>2):                    
+                                    btnFinal= tk.Button(winMatrizFinal, text="SIGUIENTE RONDA", bg="#926359", fg="#FFFFFF")
+                                    btnFinal.place(x=1000, y=75)
+                                    def equiposGanadores():
+                                        Tabla1=lst
+                                        EquiposGanadores=[]
+                                        for fila in range(Tabla1):
+                                            EquiposGanadores.append(fila[4])
+                                        return Tabla(NumeroDeEquiposEnLaFinal,equiposDic=EquiposGanadores,d=[["Equipo","Puntos Anotados","Equipo","Puntos Anotados","Ganador"]],inicio=0,EquipoGanador="")
+                                    if btnFinal.bind("<Button-1>",iniciarFinal ) is True:
+                                        lst=equiposGanadores()
                                 total_rows = len(lst)
                                 total_columns = len(lst[0])
                                 t = Table(winMatrizFinal)
