@@ -95,7 +95,7 @@ def ingresoEquipos (event):
         btnProcesarEquipo = tk.Button(
             winVentana5, text="ELIMINAR", bg="#926359", fg="#FFFFFF")
         btnProcesarEquipo.place(x=25, y=75)
-        btnProcesarEquipo.bind("<Button-1>", procesarEquipoAEliminar)
+        #btnProcesarEquipo.bind("<Button-1>", procesarEquipoAEliminar)
 
         def procesarEquipoAEliminar(event):
             try:
@@ -374,12 +374,12 @@ def ingresoEquipos (event):
                     btnIniciar.place(x=25, y=300)
                     btnIniciar.bind("<Button-1>", cantidadEquiposAFinal)
                         
-                    lst = [["Equipo", "Partidos Ganados", "Partidos Empatados", "Partidos Perdidos", "Puntaje", "Puntos A Favor", "Puntos En Contra", "Diferencia De Puntos"], \
-                        ordenarEquipos()]
+                    lst = [["Equipo", "Partidos Ganados", "Partidos Empatados", "Partidos Perdidos", "Puntaje", "Puntos A Favor", "Puntos En Contra", "Diferencia De Puntos"]] + ordenarEquipos()
                     total_rows = len(lst)
                     total_columns = len(lst[0])
                     t = Table(winStats)
                     winStats.mainloop()
+                    
                 btnResultados= tk.Button(
                 winMatrizPuntos, text="RESULTADOS", bg="#926359", fg="#FFFFFF")
                 btnResultados.place(x=150, y=300)
