@@ -396,8 +396,7 @@ def ingresoEquipos (event):
                 btnResultados= tk.Button(
                 winMatrizPuntos, text="RESULTADOS", bg="#926359", fg="#FFFFFF")
                 btnResultados.place(x=150, y=300)
-                btnResultados.bind("<Button-1>", verTablaEstadisticas)                
-                    
+                btnResultados.bind("<Button-1>", verTablaEstadisticas)                    
                 
                 #Campeonato
                 def estadisticasDelCampeonato(event):
@@ -405,13 +404,22 @@ def ingresoEquipos (event):
                     codigo = estadoActual["codigo"] 
                     equipos3= estadoActual["equipos"]
                     estadisticas = estadoActual["listaDeClasificacion"]
-                    valorPlanillaLista = []
-                    for y in range(len(equipos3)):
-                        codigo = y
-                        equipos4= list(equipos3[codigo].values())
-                        valorPlanillaLista.append(equipos4[3]) 
-                    valorPlanillaLista.sort(reverse = True)
 
+                    def topPlanilla():
+                        valorPlanillaLista = []
+                        for y in range(len(equipos3)):
+                            codigo = y
+                            equipos4= list(equipos3[codigo].values())
+                            valorPlanillaLista.append(equipos4[3]) 
+                        valorPlanillaLista.sort(reverse = True)
+                        return valorPlanillaLista
+                    
+                    def distPorProcedencia():
+                        lugarProcendencia = []
+                        for y in range(len(equipos3)):
+                            codigo = y
+                            equipos4= list(equipos3[codigo].values())
+                            lugarProcendencia.append(equipos4[3]) 
 
         lst = EquiposT
         total_rows = len(lst)
