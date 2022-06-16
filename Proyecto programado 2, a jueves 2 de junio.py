@@ -9,7 +9,6 @@ import tkinter as tk
 import pickle
 from tkinter import *
 from tkinter import messagebox
-from typing import Any, Hashable,Iterable,Optional
 import random
 import winsound
 import pandas as pd
@@ -272,7 +271,6 @@ def ingresoEquipos (event):
                         listaPorEquipo.append(totalDiferenciaDePuntos)
                         listaPorEquipo.append(estadoPartidos)
                         listaDeClasificacion.append(listaPorEquipo)
-                    print(listaDeClasificacion)
                     return listaDeClasificacion
 
                 def ordenarEquipos():
