@@ -12,7 +12,9 @@ from tkinter import messagebox
 from typing import Any, Hashable,Iterable,Optional
 import random
 import winsound
-
+import pandas as pd
+import matplotlib.pyplot as plt
+from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 
 # DICCIONARIO DE ALMACENAMIENTO
 estadoActual = {
@@ -413,7 +415,26 @@ def ingresoEquipos (event):
                                     btnFinal= tk.Button(winMatrizFinal, text="Menú de estadisticas", bg="#926359", fg="#FFFFFF")
                                     btnFinal.place(x=1000, y=75)
                                     #Hacer el menú de estadisticas
-                                    btnFinal.bind("<Button-1>",)
+                                    btnFinal.bind("<Button-1>", grafico1)
+                                    def grafico1(event):
+                                        dataEquipos = estadoActual["listaDeClasificacion"]
+                                        
+                                        df = pd.DataFrame(data=dataEquipos)
+
+                                        my_dict =pd.read_json("data.json")
+                                        df = pd.DataFrame(data=my_dict)
+                                        lbl=["Tigres", "Ratones", "Leones", "Elefantes"]
+                                        fig1=df.plot.area(title="Total de puntos recibidos en todo el campeonato", y='TotalDePuntos',
+                                                figsize=(8,8),stacked=False).get_figure();
+
+                                        import tkinter  as tk 
+                                        winGrafico = tk.Toplevel(winMatrizFinal)
+                                        winGrafico .geometry("800x800")   
+                                        winGrafico .title("Graphics")
+                                        plot1 = FigureCanvasTkAgg(fig1, winGrafico)
+                                        plot1.get_tk_widget().grid(row=1,column=1,padx=30,pady=30)
+                                        winGrafico.mainloop() 
+                                
                         btnFinal= tk.Button(winVentana6, text="Iniciar Final", bg="#926359", fg="#FFFFFF")
                         btnFinal.place(x=25, y=75)
                         btnFinal.bind("<Button-1>",iniciarFinal )
@@ -453,7 +474,9 @@ def ingresoEquipos (event):
                         for y in range(len(equipos3)):
                             codigo = y
                             equipos4= list(equipos3[codigo].values())
-                            lugarProcendencia.append(equipos4[1]) 
+                            lugarProcendencia.append(equipos4[1])
+        
+                  
 
         lst = EquiposT
         total_rows = len(lst)
