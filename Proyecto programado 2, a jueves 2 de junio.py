@@ -237,6 +237,7 @@ def ingresoEquipos (event):
                         totalPuntosAFavor = 0
                         totalPuntosEnContra = 0
                         totalDiferenciaDePuntos = 0
+                        estadoPartidos = True
                         for columna in range(len(puntoEquipo[0])):
                             if type(puntoEquipo[fila][columna]) == str:
                                 listaPorEquipo.append(puntoEquipo[fila][columna])
@@ -251,6 +252,8 @@ def ingresoEquipos (event):
                                 elif puntoEquipo[fila][columna] < puntoEquipo[indiceFilaDato][indiceColumnaDato]:
                                     partidosPerdidos += 1
                                 elif puntoEquipo[fila][columna] == puntoEquipo[indiceFilaDato][indiceColumnaDato]:
+                                    if puntoEquipo[fila][columna] == 0 and puntoEquipo[indiceFilaDato][indiceColumnaDato] == 0:
+                                        estadoPartido = False
                                     sumaDeClasificacion += 1
                                     partidosEmpatados += 1
                                 indiceFilaDato += 1
@@ -258,6 +261,8 @@ def ingresoEquipos (event):
                                 if type(puntoEquipo[indiceFilaDato-1][indiceColumnaDato] ) == int:
                                     totalPuntosEnContra += puntoEquipo[indiceFilaDato-1][indiceColumnaDato]    
                         totalDiferenciaDePuntos = totalPuntosAFavor - totalPuntosEnContra
+                        if totalPuntosAFavor == 0 and totalPuntosEnContra == 0:
+                            estadoPartido = False
                         listaPorEquipo.append(partidosGanados)
                         listaPorEquipo.append(partidosEmpatados)
                         listaPorEquipo.append(partidosPerdidos)
@@ -265,6 +270,7 @@ def ingresoEquipos (event):
                         listaPorEquipo.append(totalPuntosAFavor)
                         listaPorEquipo.append(totalPuntosEnContra)
                         listaPorEquipo.append(totalDiferenciaDePuntos)
+                        listaPorEquipo.append(estadoPartidos)
                         listaDeClasificacion.append(listaPorEquipo)
                     estadoActual["listaDeClasificacion"] = listaDeClasificacion
                     return listaDeClasificacion
