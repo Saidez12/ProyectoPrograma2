@@ -314,6 +314,7 @@ def ingresoEquipos (event):
                         Equipo1=equiposDic[inicio]
                         Equipo2=equiposDic[inicio+1]
                         puntaje1=puntajeAleatorio()
+                        puntaje2=puntajeAleatorio()
                         return Tabla(NumeroDeEquiposEnLaFinal,equiposDic,d+([[Equipo1,puntaje1,Equipo2,puntaje2,EquipoGanador]]),inicio+2,"")
 
                     def cantidadEquiposAFinal(event):
