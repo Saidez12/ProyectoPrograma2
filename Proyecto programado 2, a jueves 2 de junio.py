@@ -272,7 +272,6 @@ def ingresoEquipos (event):
                         listaPorEquipo.append(totalDiferenciaDePuntos)
                         listaPorEquipo.append(estadoPartidos)
                         listaDeClasificacion.append(listaPorEquipo)
-                    estadoActual["listaDeClasificacion"] = listaDeClasificacion
                     print(listaDeClasificacion)
                     return listaDeClasificacion
 
@@ -288,6 +287,7 @@ def ingresoEquipos (event):
                                 break
                         if equipos[posicionEquipo] not in equiposOrdenados:
                             equiposOrdenados.append(equipos[posicionEquipo])
+                    estadoActual["listaDeClasificacion"] = equiposOrdenados
                     return equiposOrdenados
 
                 def verTablaEstadisticas(event):
