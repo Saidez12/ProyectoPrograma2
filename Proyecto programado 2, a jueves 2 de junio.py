@@ -24,7 +24,7 @@ estadoActual = {
 "equiposOrdenados": [],
 "nombresOrdenados": NULL,
 "datosTorneo": NULL,
-"FaseFinalDelTorneo": NULL
+"FaseFinalDelTorneo": []
 } 
 
 
@@ -299,15 +299,18 @@ def ingresoEquipos (event):
                                     self.e.insert(END, lst[iFila][iColumna])
 
 # TABLA DE RESULTADOS
-                    def equiposGanadores(NumeroDeEquiposEnLaFinal):
+                    def equiposGanadores():
                         Tabla1=estadoActual["FaseFinalDelTorneo"]
+                        print(Tabla1)
                         EquiposGanadores=[]
                         indice=1
-                        while(indice<len(Tabla1)):
-                            EquiposGanadores.append(Tabla1[indice][4])
-                            indice+=1
-                        print(EquiposGanadores)
-                        return Tabla(NumeroDeEquiposEnLaFinal,equiposDic=EquiposGanadores,d=[["Equipo","Puntos Anotados","Equipo","Puntos Anotados","Ganador"]],inicio=0,EquipoGanador="")
+                        if(Tabla1!=[]):
+                            while(indice<len(Tabla1)):
+                                EquiposGanadores.append(Tabla1[indice][4])
+                                indice+=1
+                            print(EquiposGanadores)
+                            return EquiposGanadores
+                        return EquiposGanadores
 
                     def puntajeAleatorio(): 
                         return random.randint(0,150)
@@ -329,6 +332,7 @@ def ingresoEquipos (event):
                         puntaje2=puntajeAleatorio()
                         if(puntaje1>puntaje2):
                             EquipoGanador=Equipo1
+
                         elif(puntaje1<puntaje2):
                             EquipoGanador=Equipo2
                         elif(puntaje1==puntaje2):
@@ -351,7 +355,6 @@ def ingresoEquipos (event):
                         entEquiposFinal = tk.Entry(
                             winVentana6, fg="White", bg="Black", width=15)
                         entEquiposFinal.place(x=125, y=55)
-
                         def iniciarFinal(event):
                             state=True
                             NumeroDeEquiposEnLaFinal=entEquiposFinal.get()
@@ -383,16 +386,33 @@ def ingresoEquipos (event):
                                                                     font=('Arial', 12, 'bold'))
                                                     self.e.grid(row=i, column=j)
                                                     self.e.insert(END, lst[i][j])
-                                lst = Tabla(NumeroDeEquiposEnLaFinal)
-                                estadoActual["FaseFinalDelTorneo"]=lst
-                                print (lst)              
+                                Equiposganadores=equiposGanadores()
+                                if(Equiposganadores!=[]):
+                                    lst = Tabla(NumeroDeEquiposEnLaFinal,equiposDic=Equiposganadores)
+                                    estadoActual["FaseFinalDelTorneo"]+=lst
+                                else:
+                                    lst = Tabla(NumeroDeEquiposEnLaFinal)
+                                    estadoActual["FaseFinalDelTorneo"]+=lst
+                                print (lst)        
+                                print(estadoActual["FaseFinalDelTorneo"]) 
+                                print(Equiposganadores)     
                                 total_rows = len(lst)
                                 total_columns = len(lst[0])
                                 t = Table(winMatrizFinal)
-                                
-                                btnFinal= tk.Button(winMatrizFinal, text="SIGUIENTE RONDA", bg="#926359", fg="#FFFFFF")
-                                btnFinal.place(x=1000, y=75)
-                                btnFinal.bind("<Button-1>",iniciarFinal )
+                                if(len(Equiposganadores)==2):
+                                    btnFinal= tk.Button(winMatrizFinal, text="Menú de estadisticas", bg="#926359", fg="#FFFFFF")
+                                    btnFinal.place(x=1000, y=75)
+                                    #Hacer el menú de estadisticas
+                                    btnFinal.bind("<Button-1>",)
+                                elif(NumeroDeEquiposEnLaFinal>2 ):
+                                    btnFinal= tk.Button(winMatrizFinal, text="SIGUIENTE RONDA", bg="#926359", fg="#FFFFFF")
+                                    btnFinal.place(x=1000, y=75)
+                                    btnFinal.bind("<Button-1>",iniciarFinal )
+                                else:
+                                    btnFinal= tk.Button(winMatrizFinal, text="Menú de estadisticas", bg="#926359", fg="#FFFFFF")
+                                    btnFinal.place(x=1000, y=75)
+                                    #Hacer el menú de estadisticas
+                                    btnFinal.bind("<Button-1>",)
                         btnFinal= tk.Button(winVentana6, text="Iniciar Final", bg="#926359", fg="#FFFFFF")
                         btnFinal.place(x=25, y=75)
                         btnFinal.bind("<Button-1>",iniciarFinal )
