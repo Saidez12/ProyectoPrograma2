@@ -415,9 +415,6 @@ def ingresoEquipos (event):
         cantidadEquiposVentana.mainloop()
 
 
-# TABLA DE RESULTADOS
-
-
 # LOBBY
     def intermedio():
         winVentana3= tk.Toplevel(infoEquiposVentana)
