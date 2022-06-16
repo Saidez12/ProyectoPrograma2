@@ -284,13 +284,16 @@ def ingresoEquipos (event):
                     return equiposOrdenados
 
                 def verTablaEstadisticas(event):
-                    winStats= tk.Toplevel(cantidadEquiposVentana)
+                    winStats= tk.Toplevel(winMatrizPuntos)
                     winStats.resizable(False, False)
                     winStats.geometry("1400x500")
                     winStats.title("Equipos a la final")
                     x = 100
                     y = 200
                     winStats.geometry("+%d+%d" % (x+75, y+75))
+                    btnIniciar = tk.Button(winStats, text="SIMULACIÓN", bg="#926359", fg="#FFFFFF")
+                    btnIniciar.place(x=25, y=300)
+                    btnIniciar.bind("<Button-1>", cantidadEquiposAFinal)
                     class Table:
                         def __init__(self, winStats):
                             puntoEquipo = [] 
@@ -307,9 +310,7 @@ def ingresoEquipos (event):
                     total_rows = len(lst)
                     total_columns = len(lst[0])
                     t = Table(winStats)
-                    btnIniciar = tk.Button(winStats, text="SIMULACIÓN", bg="#926359", fg="#FFFFFF")
-                    btnIniciar.place(x=25, y=300)
-                    btnIniciar.bind("<Button-1>", cantidadEquiposAFinal)
+
                     winStats.mainloop()
 
                     def puntajeAleatorio(): 
