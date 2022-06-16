@@ -297,6 +297,7 @@ def ingresoEquipos (event):
                                     self.e.grid(row=iFila, column=iColumna)
                                     self.e.insert(END, lst[iFila][iColumna])
 
+# TABLA DE RESULTADOS
                     def puntajeAleatorio(): 
                         return random.randint(0,150)
 
