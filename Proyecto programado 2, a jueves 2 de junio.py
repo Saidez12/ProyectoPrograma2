@@ -21,7 +21,7 @@ estadoActual = {
 "equipoActual": NULL, 
 "codigo": 0, 
 "listaDeClasificacion" : NULL, 
-"equiposOrdenados": NULL,
+"equiposOrdenados": [],
 "nombresOrdenados": NULL,
 "datosTorneo": NULL
 } 
@@ -280,7 +280,6 @@ def ingresoEquipos (event):
                                 break
                         if equipos[posicionEquipo] not in equiposOrdenados:
                             equiposOrdenados.append(equipos[posicionEquipo])
-                    estadoActual["equiposOrdenados"] = equiposOrdenados
                     return equiposOrdenados
 
                 def verTablaEstadisticas(event):
@@ -291,9 +290,6 @@ def ingresoEquipos (event):
                     x = 100
                     y = 200
                     winStats.geometry("+%d+%d" % (x+75, y+75))
-                    btnIniciar = tk.Button(winStats, text="SIMULACIÓN", bg="#926359", fg="#FFFFFF")
-                    btnIniciar.place(x=25, y=300)
-                    btnIniciar.bind("<Button-1>", cantidadEquiposAFinal)
                     class Table:
                         def __init__(self, winStats):
                             for iFila in range(total_rows):
@@ -302,37 +298,23 @@ def ingresoEquipos (event):
                                                     font=('Arial', 12, 'bold'))
                                     self.e.grid(row=iFila, column=iColumna)
                                     self.e.insert(END, lst[iFila][iColumna])
-                    lst = ["Equipo", "Partidos Ganados", "Partidos Empatados", "Partidos Perdidos", "Puntaje", "Puntos A Favor", "Puntos En Contra", "Diferencia De Puntos"] + ordenarEquipos()
-                    total_rows = len(lst)
-                    total_columns = len(lst[0])
-                    t = Table(winStats)
-
-                    winStats.mainloop()
 
                 def puntajeAleatorio(): 
                     return random.randint(0,150)
 
-                def nombresDeEquiposOrdenados(nombresOrdenados=[],Lista=ordenarEquipos(),indice=0):
-                    if(indice>=len(Lista)):
-                        estadoActual["nombresOrdenados"] = nombresOrdenados
-                        return nombresOrdenados
-                    Equipo=[(Lista[indice][0])]
-                    return nombresDeEquiposOrdenados(nombresOrdenados+[Equipo],Lista,indice+1)
+                    def nombresDeEquiposOrdenados(nombresOrdenados=[],Lista=ordenarEquipos(),indice=0):
+                        if(indice>=len(Lista)):
+                            return nombresOrdenados
+                        Equipo=[(Lista[indice][0])]
+                        return nombresDeEquiposOrdenados(nombresOrdenados+[Equipo],Lista,indice+1)
 
-                def Tabla(NumeroDeEquiposEnLaFinal,equiposDic=nombresDeEquiposOrdenados,d=[["Equipo","Puntos Anotados","Equipo","Puntos Anotados","Ganador"]],inicio=0,EquipoGanador=""):
-                    if(NumeroDeEquiposEnLaFinal<len(equiposDic) and inicio==0):
-                        equiposDic=equiposDic[:NumeroDeEquiposEnLaFinal]
-                    if(inicio>=len(equiposDic)):
-                        return d
-                    Equipo1=equiposDic[inicio]
-                    Equipo2=equiposDic[inicio+1]
-                    puntaje1=puntajeAleatorio()
-                    puntaje2=puntajeAleatorio()
-                    if(puntaje1>puntaje2):
-                        EquipoGanador=Equipo1
-                    elif(puntaje2>puntaje1):
-                        EquipoGanador=Equipo2
-                    if(puntaje1==puntaje2):
+                    def Tabla(NumeroDeEquiposEnLaFinal,equiposDic=nombresDeEquiposOrdenados(),d=[["Equipo","Puntos Anotados","Equipo","Puntos Anotados","Ganador"]],inicio=0,EquipoGanador=""):
+                        if(NumeroDeEquiposEnLaFinal<len(equiposDic) and inicio==0):
+                            equiposDic=equiposDic[:NumeroDeEquiposEnLaFinal]
+                        if(inicio>=len(equiposDic)):
+                            return d
+                        Equipo1=equiposDic[inicio]
+                        Equipo2=equiposDic[inicio+1]
                         puntaje1=puntajeAleatorio()
                     return Tabla(NumeroDeEquiposEnLaFinal,equiposDic,d+([[Equipo1,puntaje1,Equipo2,puntaje2,EquipoGanador]]),inicio+2,"")
 
@@ -370,6 +352,7 @@ def ingresoEquipos (event):
                         winMatrizFinal.title("Tabla de Fase Final de campeonato")
                         x = 100
                         y = 200
+<<<<<<< HEAD
                         winMatrizFinal.geometry("+%d+%d" % (x+75, y+75))
                         winMatrizFinal.protocol("WM_DELETE_WINDOW", on_closing)
 
@@ -389,7 +372,62 @@ def ingresoEquipos (event):
                     btnFinal.place(x=25, y=75)
                     if(State==True):
                         btnFinal.bind("<Button-1>",iniciarFinal )
+=======
+                        winVentana6.geometry("+%d+%d" % (x+75, y+75))
+                        winVentana6.protocol("WM_DELETE_WINDOW", on_closing)
+                        lblEquiposFinal = tk.Label(
+                            winVentana6, text="Indique la cantidad de equipos que desea en la final ")
+                        lblEquiposFinal.place(x=10, y=25)
+                        entEquiposFinal = tk.Entry(
+                            winVentana6, fg="White", bg="Black", width=15)
+                        entEquiposFinal.place(x=125, y=55)
+
+                        def iniciarFinal(event):
+                            state=True
+                            NumeroDeEquiposEnLaFinal=entEquiposFinal.get()
+                            NumeroDeEquiposEnLaFinal=int(NumeroDeEquiposEnLaFinal)
+                            equipos10=ordenarEquipos()
+                            if(NumeroDeEquiposEnLaFinal%2!=0):
+                                messagebox.showinfo(message="El Numero de equipos en la final debe ser un número par")
+                                state=False
+                            if(NumeroDeEquiposEnLaFinal>len(equipos10)):
+                                messagebox.showinfo(message="El número de equipos en la final debe ser un número igual o menor a la cantidad inicial de equipos")
+                                state=False
+                            if(state==True):
+                                winMatrizFinal = tk.Toplevel(winVentana6)
+                                winMatrizFinal.resizable(False, False)
+                                winMatrizFinal.geometry("1250x500")
+                                winMatrizFinal.title("Tabla de Fase Final de campeonato")
+                                x = 100
+                                y = 200
+                                winMatrizFinal.geometry("+%d+%d" % (x+75, y+75))
+                                winMatrizFinal.protocol("WM_DELETE_WINDOW", on_closing)
+                                class Table:
+                                        def __init__(self, winMatrizFinal):
+                                            for i in range(total_rows):
+                                                for j in range(total_columns):
+                                                    self.e = Entry(winMatrizFinal, width=15, fg='black',
+                                                                    font=('Arial', 12, 'bold'))
+                                                    self.e.grid(row=i, column=j)
+                                                    self.e.insert(END, lst[i][j])
+                                lst = Tabla(NumeroDeEquiposEnLaFinal)
+                                total_rows = len(lst)
+                                total_columns = len(lst[0])
+                                t = Table(winMatrizFinal)
+                        btnFinal= tk.Button(winVentana6, text="Iniciar Final", bg="#926359", fg="#FFFFFF")
+                        btnFinal.place(x=25, y=75)
+                        btnFinal.bind("<Button-1>",iniciarFinal )
+                    btnIniciar = tk.Button(winStats, text="SIMULACIÓN", bg="#926359", fg="#FFFFFF")
+                    btnIniciar.place(x=25, y=300)
+                    btnIniciar.bind("<Button-1>", cantidadEquiposAFinal)
+>>>>>>> b5c21de44500c8d81a8317a077ee22abb907900c
                     
+                    lst = [["Equipo", "Partidos Ganados", "Partidos Empatados", "Partidos Perdidos", "Puntaje", "Puntos A Favor", "Puntos En Contra", "Diferencia De Puntos"], \
+                        ordenarEquipos()]
+                    total_rows = len(lst)
+                    total_columns = len(lst[0])
+                    t = Table(winStats)
+                    winStats.mainloop()
                 btnResultados= tk.Button(
                 winMatrizPuntos, text="RESULTADOS", bg="#926359", fg="#FFFFFF")
                 btnResultados.place(x=150, y=300)
