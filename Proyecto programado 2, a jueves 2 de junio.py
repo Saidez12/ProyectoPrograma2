@@ -273,6 +273,7 @@ def ingresoEquipos (event):
                         listaPorEquipo.append(estadoPartidos)
                         listaDeClasificacion.append(listaPorEquipo)
                     estadoActual["listaDeClasificacion"] = listaDeClasificacion
+                    print(listaDeClasificacion)
                     return listaDeClasificacion
 
                 def ordenarEquipos():
