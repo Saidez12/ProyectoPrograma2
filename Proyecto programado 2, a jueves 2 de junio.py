@@ -23,7 +23,8 @@ estadoActual = {
 "listaDeClasificacion" : NULL, 
 "equiposOrdenados": [],
 "nombresOrdenados": NULL,
-"datosTorneo": NULL
+"datosTorneo": NULL,
+"FaseFinalDelTorneo": NULL
 } 
 
 
@@ -298,6 +299,16 @@ def ingresoEquipos (event):
                                     self.e.insert(END, lst[iFila][iColumna])
 
 # TABLA DE RESULTADOS
+                    def equiposGanadores(NumeroDeEquiposEnLaFinal):
+                        Tabla1=estadoActual["FaseFinalDelTorneo"]
+                        EquiposGanadores=[]
+                        indice=1
+                        while(indice<len(Tabla1)):
+                            EquiposGanadores.append(Tabla1[indice][4])
+                            indice+=1
+                        print(EquiposGanadores)
+                        return Tabla(NumeroDeEquiposEnLaFinal,equiposDic=EquiposGanadores,d=[["Equipo","Puntos Anotados","Equipo","Puntos Anotados","Ganador"]],inicio=0,EquipoGanador="")
+
                     def puntajeAleatorio(): 
                         return random.randint(0,150)
 
@@ -373,20 +384,15 @@ def ingresoEquipos (event):
                                                     self.e.grid(row=i, column=j)
                                                     self.e.insert(END, lst[i][j])
                                 lst = Tabla(NumeroDeEquiposEnLaFinal)
-                                if(NumeroDeEquiposEnLaFinal>2):                    
-                                    btnFinal= tk.Button(winMatrizFinal, text="SIGUIENTE RONDA", bg="#926359", fg="#FFFFFF")
-                                    btnFinal.place(x=1000, y=75)
-                                    def equiposGanadores():
-                                        Tabla1=lst
-                                        EquiposGanadores=[]
-                                        for fila in range(Tabla1):
-                                            EquiposGanadores.append(fila[4])
-                                        return Tabla(NumeroDeEquiposEnLaFinal,equiposDic=EquiposGanadores,d=[["Equipo","Puntos Anotados","Equipo","Puntos Anotados","Ganador"]],inicio=0,EquipoGanador="")
-                                    if btnFinal.bind("<Button-1>",iniciarFinal ) is True:
-                                        lst=equiposGanadores()
+                                estadoActual["FaseFinalDelTorneo"]=lst
+                                print (lst)              
                                 total_rows = len(lst)
                                 total_columns = len(lst[0])
                                 t = Table(winMatrizFinal)
+                                
+                                btnFinal= tk.Button(winMatrizFinal, text="SIGUIENTE RONDA", bg="#926359", fg="#FFFFFF")
+                                btnFinal.place(x=1000, y=75)
+                                btnFinal.bind("<Button-1>",iniciarFinal )
                         btnFinal= tk.Button(winVentana6, text="Iniciar Final", bg="#926359", fg="#FFFFFF")
                         btnFinal.place(x=25, y=75)
                         btnFinal.bind("<Button-1>",iniciarFinal )
