@@ -407,6 +407,7 @@ def ingresoEquipos (event):
                                 elif(NumeroDeEquiposEnLaFinal>2 ):
                                     btnFinal= tk.Button(winMatrizFinal, text="SIGUIENTE RONDA", bg="#926359", fg="#FFFFFF")
                                     btnFinal.place(x=1000, y=75)
+                                    
                                     btnFinal.bind("<Button-1>",iniciarFinal )
                                 else:
                                     btnFinal= tk.Button(winMatrizFinal, text="Menú de estadisticas", bg="#926359", fg="#FFFFFF")
