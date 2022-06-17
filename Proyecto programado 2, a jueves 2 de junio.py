@@ -608,17 +608,17 @@ def verTablaEstadisticas(event):
                         Lista.extend([[y[2][0],y[3],y[1]]])
                     return Lista
                 
-                def puntosAnotadosEnTodoElCampeonato():
-                    puntosAnotadosCadaEquipo = []
-                    sumaPuntos = 0
-                    porcentajePuntosPorCadaEquipo = []
-                    estadisticas = estadoActual["listaDeClasificacion"]
-                    datosTorneo = datosTorneoPuntos()
-                    print(estadisticas)
-                    for indice1 in range(len(datosTorneo)-2):
-                        estadisticas[indice1][5] = estadisticas[indice1][5] + datosTorneo[indice1][1]
+                def datosTorneoPuntos2():
+                    dec=estadoActual["FaseFinalDelTorneo"]
+                    Lista=[]
+                    for y in dec:
+                        if(y[0]=="Equipo"):
+                            continue
+                        Lista.extend([[y[0][0],y[1],y[3]]])
+                        Lista.extend([[y[2][0],y[3],y[1]]])
+                    return Lista
                     
-                def puntosAnotadosEnTodoElCampeonato2():
+                def puntosAnotadosEnTodoElCampeonato():
                     puntosAnotadosCadaEquipo = []
                     sumaPuntos = 0
                     porcentajePuntosPorCadaEquipo = []
@@ -659,7 +659,6 @@ def verTablaEstadisticas(event):
                     winGrafico.geometry("1000x900")   
                     winGrafico .title("Graphics")
                     porcetanjes = puntosAnotadosEnTodoElCampeonato()
-                    nombresEquipos = nombresDeEquiposOrdenados()
                     my_dict = {"TotalDePuntos": porcetanjes}
                     df = pd.DataFrame(data=my_dict)
                     lbl= nombresDeEquiposOrdenados()
@@ -699,7 +698,25 @@ def verTablaEstadisticas(event):
                     winGrafico.geometry("1000x900")   
                     winGrafico .title("Graphics")
                     porcetanjes = puntosAnotadosEnTodoElCampeonato()
-                    nombresEquipos = nombresDeEquiposOrdenados()
+                    my_dict = {"TotalDePuntos": porcetanjes}
+                    df = pd.DataFrame(data=my_dict)
+                    lbl= nombresDeEquiposOrdenados()
+                    nombresEnGrafica = []
+                    for label in range(len(lbl)):
+                        lbl[label].append(str(porcetanjes[label])+"%")
+                    for posicion in range(len(lbl)):
+                        nombresEnGrafica.append(lbl[posicion][0]+" ("+lbl[posicion][1]+")")
+                    fig1=df.plot.pie(title="Total de puntos anotados en todo el campeonato", y='TotalDePuntos',
+                            figsize=(10,10),labels=nombresEnGrafica).get_figure();
+                    plot1 = FigureCanvasTkAgg(fig1, winGrafico)
+                    plot1.get_tk_widget().grid(row=1,column=1,padx=30,pady=30)
+                    winGrafico.mainloop()  
+                    
+                def grafico4(event):
+                    winGrafico = tk.Toplevel(winVentana6)
+                    winGrafico.geometry("1000x900")   
+                    winGrafico .title("Graphics")
+                    porcetanjes = puntosAnotadosEnTodoElCampeonato()
                     my_dict = {"TotalDePuntos": porcetanjes}
                     df = pd.DataFrame(data=my_dict)
                     lbl= nombresDeEquiposOrdenados()
