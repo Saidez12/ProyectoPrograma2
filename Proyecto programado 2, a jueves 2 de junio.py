@@ -104,6 +104,20 @@ def ingresoEquipos (event):
         entCantidadJugadores.insert(0, equipoActual["Cantidad de jugadores"])
         btnContinuarIngreso.bind("<Button-1>", editarEquipo)
     
+    def agregarEquipo(event):
+        indice  = estadoActual["indice"]
+        indice+=1
+        estadoActual["indice"] = indice
+        if(indice < cantidadEquipos):
+            obtenerYGuardar()
+            if(indice == cantidadEquipos-1):
+                intermedio()
+        else:
+            intermedio()
+            
+    def editarEquipo(event):
+        almacenarModificaciones()
+        
 # INICIO DEL PROGRAMA
     if(equipoActual == NULL):
         try:
@@ -121,16 +135,6 @@ def ingresoEquipos (event):
         entCantidadJugadores.insert(0, equipoActual["Cantidad de jugadores"])
         btnContinuarIngreso.bind("<Button-1>", editarEquipo)
     
-    def agregarEquipo(event):
-        indice  = estadoActual["indice"]
-        indice+=1
-        estadoActual["indice"] = indice
-        if(indice < cantidadEquipos):
-            obtenerYGuardar()
-            if(indice == cantidadEquipos-1):
-                intermedio()
-        else:
-            intermedio()
             
     
     def guardarDiccionario (cantidadJugadores,procedencia, nombre, valorPlanilla):
@@ -217,10 +221,6 @@ def ingresoEquipos (event):
         with open("data.json","rb") as fp:
             data = pickle.load(fp)
         print(data)
-
-    def editarEquipo(event):
-        almacenarModificaciones()
-        intermedio()
     
     def modificarDiccionario(event):
         winVentana4= tk.Toplevel(cantidadEquiposVentana)
