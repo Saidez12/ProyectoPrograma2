@@ -91,9 +91,24 @@ def ingresoEquipos (event):
     btnContinuarIngreso.unbind("<Button-1>")
     equipoActual  = estadoActual["equipoActual"]
     
+# FUNCIONES DE PASO
+    def editarEquipo(event):
+        almacenarModificaciones()
+        intermedio()
 
+
+    def agregarEquipo(event):
+        indice  = estadoActual["indice"]
+        indice+=1
+        estadoActual["indice"] = indice
+        if(indice < cantidadEquipos):
+            obtenerYGuardar()
+            if(indice == cantidadEquipos-1):
+                intermedio()
+        else:
+            intermedio()
             
-    # INICIO DEL PROGRAMA
+# INICIO DEL PROGRAMA
     if(equipoActual == NULL):
         try:
             cantidadEquipos = int(entCantidadEquipos.get())
@@ -111,18 +126,7 @@ def ingresoEquipos (event):
         btnContinuarIngreso.bind("<Button-1>", editarEquipo)
     
 
-    # GUARDADO DE EQUIPOS
-    def agregarEquipo(event):
-        indice  = estadoActual["indice"]
-        indice+=1
-        estadoActual["indice"] = indice
-        if(indice < cantidadEquipos):
-            obtenerYGuardar()
-            if(indice == cantidadEquipos-1):
-                intermedio()
-        else:
-            intermedio()
-
+# GUARDADO DE EQUIPOS
     def guardarDiccionario (cantidadJugadores,procedencia, nombre, valorPlanilla):
         equipos = estadoActual["equipos"]
         codigo = estadoActual["codigo"]
@@ -150,7 +154,7 @@ def ingresoEquipos (event):
         guardarDiccionario(cantidadJugadores,procedencia, nombre, valorPlanilla)
     
 
-    # MODIFICACIONES DE EQUIPOS
+# MODIFICACIONES DE EQUIPOS
     def modificarDiccionario(event):
         winVentana4= tk.Toplevel(cantidadEquiposVentana)
         winVentana4.resizable(False, False)
@@ -189,10 +193,6 @@ def ingresoEquipos (event):
                 else:
                     continue
         btnModificarEquipo.bind("<Button-1>", buscarEquipo)
-        
-    def editarEquipo(event):
-        almacenarModificaciones()
-        intermedio()
 
     def almacenarModificaciones():
         codigo = estadoActual["codigo"]
@@ -251,7 +251,7 @@ def ingresoEquipos (event):
         btnModificarEquipo.bind("<Button-1>", buscarEquipo)
         
 
-    #ELIMINACIÓN DE EQUIPOS
+#ELIMINACIÓN DE EQUIPOS
     def procesarEquipoAEliminar(event):
         try:
             equipoAEliminar = entNombreEquipo.get()
@@ -304,7 +304,7 @@ def ingresoEquipos (event):
     btnEliminarEquipo.bind("<Button-1>", eliminarEquipo)    
     
 
-    # LOBBY
+# LOBBY
     def intermedio():
         winVentana3= tk.Toplevel(infoEquiposVentana)
         winVentana3.resizable(False, False)
@@ -339,7 +339,7 @@ def ingresoEquipos (event):
         except:
             messagebox.showinfo("Error", message="Consulte la tabla de partidos jugados")
     
-
+    
 # GENERACIÓN DE PUNTAJES
 def puntajeAletorio(): 
     return random.randint(0,150)
