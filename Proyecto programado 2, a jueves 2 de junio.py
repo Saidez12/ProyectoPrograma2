@@ -263,7 +263,7 @@ def ingresoEquipos (event):
                 else:
                     continue
         btnModificarEquipo.bind("<Button-1>", buscarEquipo)
-        
+
 # ELIMINACIÓN DE EQUIPOS
     def procesarEquipoAEliminar(event):
         try:
