@@ -16,6 +16,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 
+# VENTANA MADRE
 cantidadEquiposVentana = tk.Tk()
 cantidadEquiposVentana.title("Ingreso al campeonato")
 cantidadEquiposVentana.geometry("280x120")
@@ -46,13 +47,6 @@ estadoActual = {
 "PartidosJugados":[]
 } 
 
-
-#Cerrar Ventana
-#def on_closing():
-   #if messagebox.askokcancel("Salir", "Desea salir de la aplicación?"):
-        #cantidadEquiposVentana.quit()
-        
-# VENTANA MADRE
 
 
 # INGRESO DE EQUIPOS
@@ -110,7 +104,7 @@ def ingresoEquipos (event):
         entCantidadJugadores.insert(0, equipoActual["Cantidad de jugadores"])
         btnContinuarIngreso.bind("<Button-1>", editarEquipo)
     
-    # INICIO DEL PROGRAMA
+# INICIO DEL PROGRAMA
     if(equipoActual == NULL):
         try:
             cantidadEquipos = int(entCantidadEquipos.get())
@@ -139,7 +133,6 @@ def ingresoEquipos (event):
             intermedio()
             
     
-    
     def guardarDiccionario (cantidadJugadores,procedencia, nombre, valorPlanilla):
         equipos = estadoActual["equipos"]
         codigo = estadoActual["codigo"]
@@ -152,7 +145,7 @@ def ingresoEquipos (event):
             data = pickle.load(fp)
         print(equipos)
     
-    # GUARDADO DE EQUIPOS
+# GUARDADO DE EQUIPOS
     def obtenerYGuardar():
         try:
             cantidadJugadores = int(entCantidadJugadores.get())
@@ -166,7 +159,9 @@ def ingresoEquipos (event):
         entNombreEquipo.delete (0,"end")
         entValorPlanilla.delete (0,"end")
         guardarDiccionario(cantidadJugadores,procedencia, nombre, valorPlanilla)
-    
+
+        
+# MODIFICACIONES DE EQUIPOS
     def modificarDiccionario(event):
         winVentana4= tk.Toplevel(cantidadEquiposVentana)
         winVentana4.resizable(False, False)
@@ -205,8 +200,6 @@ def ingresoEquipos (event):
                 else:
                     continue
         btnModificarEquipo.bind("<Button-1>", buscarEquipo)
-        
-    # MODIFICACIONES DE EQUIPOS
 
     def almacenarModificaciones():
         codigo = estadoActual["codigo"]
@@ -268,7 +261,7 @@ def ingresoEquipos (event):
                     continue
         btnModificarEquipo.bind("<Button-1>", buscarEquipo)
         
-    #Eliminar Equipos
+# ELIMINACIÓN DE EQUIPOS
     def procesarEquipoAEliminar(event):
         try:
             equipoAEliminar = entNombreEquipo.get()
@@ -296,7 +289,6 @@ def ingresoEquipos (event):
         else:
             messagebox.showinfo(message="Debe ingresar un equipo que se encuentre en el tablero de punto anotados")
                 
-    # ELIMINACIÓN DE EQUIPOS
     def eliminarEquipo(event):
         winVentana5= tk.Toplevel(cantidadEquiposVentana)
         winVentana5.resizable(False, False)
@@ -320,12 +312,14 @@ def ingresoEquipos (event):
     btnContinuar.bind("<Button-1>", ingresoEquipos)
     btnEliminarEquipo.place(x=25, y=300)
     btnEliminarEquipo.bind("<Button-1>", eliminarEquipo)    
-    # LOBBY
+
+
+# LOBBY
     def intermedio():
         winVentana3= tk.Toplevel(infoEquiposVentana)
         winVentana3.resizable(False, False)
         winVentana3.geometry("500x200")
-        winVentana3.title("Modificar un equipo")
+        winVentana3.title("Lobby")
         x = infoEquiposVentana.winfo_x()
         y = infoEquiposVentana.winfo_y()
         winVentana3.geometry("+%d+%d" % (x+75, y+75))
@@ -335,19 +329,19 @@ def ingresoEquipos (event):
             winVentana3, text="Los equipos se han guardado satisfactoriamente")
         lblEquiposGuardados.place(x=15, y=25)
         btnModificar = tk.Button(
-            winVentana3, text="Modificar un equipo", bg="#926359", fg="#FFFFFF")
+            winVentana3, text="MODIFICAR EQUIPO", bg="#926359", fg="#FFFFFF")
         btnModificar.place(x=25, y=75)
         btnModificar.bind("<Button-1>", modificarDiccionario)
         btnTablaResultados= tk.Button(
-            winVentana3, text="Estadísticas del Campeonato / Simulación de torneo", bg="#926359", fg="#FFFFFF")
+            winVentana3, text="SIMULACIÓN TORNEO", bg="#926359", fg="#FFFFFF")
         btnTablaResultados.place(x=150, y=125)
         btnTablaResultados.bind("<Button-1>", verTablaEstadisticas)
         btnTablaResultados= tk.Button(
-            winVentana3, text="Ver tabla de partidos jugados", bg="#926359", fg="#FFFFFF")
+            winVentana3, text="TABLA RESULTADOS", bg="#926359", fg="#FFFFFF")
         btnTablaResultados.place(x=150, y=75)
         btnTablaResultados.bind("<Button-1>", matrizEquipos)
         btnEliminarEquipo= tk.Button(
-            winVentana3, text="Eliminar Equipo", bg="#926359", fg="#FFFFFF")
+            winVentana3, text="ELIMINAR EQUIPO", bg="#926359", fg="#FFFFFF")
         btnEliminarEquipo.place(x=25, y=125)
         try:
             estadoActual["matrizDatos"].get()
@@ -500,6 +494,8 @@ def verTablaEstadisticas(event):
                                     font=('Arial', 12, 'bold'))
                     self.e.grid(row=iFila, column=iColumna)
                     self.e.insert(END, lst[iFila][iColumna])
+
+
 # TABLA DE RESULTADOS
     def equiposGanadores():
         Tabla1=estadoActual["FaseFinalDelTorneo"]
@@ -540,7 +536,6 @@ def verTablaEstadisticas(event):
         elif(puntaje1==puntaje2):
             puntaje1=puntajeAleatorio()
         return Tabla(NumeroDeEquiposEnLaFinal,equiposDic,d+([[Equipo1,puntaje1,Equipo2,puntaje2,EquipoGanador]]),inicio+2,"")
-
 
     def cantidadEquiposAFinal(event):
         winVentana6= tk.Toplevel(winStats)
@@ -675,7 +670,7 @@ def verTablaEstadisticas(event):
     t = Table(winStats)
     winStats.mainloop()                    
 
-#Campeonato
+# CAMPEONATO
 def estadisticasDelCampeonato(event):
     equiposOrdenados = ordenarEquipos()
     codigo = estadoActual["codigo"] 
