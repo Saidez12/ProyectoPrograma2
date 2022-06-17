@@ -94,8 +94,6 @@ def ingresoEquipos (event):
 # FUNCIONES DE PASO
     def editarEquipo(event):
         almacenarModificaciones()
-        intermedio()
-
 
     def agregarEquipo(event):
         indice  = estadoActual["indice"]
@@ -339,7 +337,7 @@ def ingresoEquipos (event):
         except:
             messagebox.showinfo("Error", message="Consulte la tabla de partidos jugados")
     
-    
+
 # GENERACIÓN DE PUNTAJES
 def puntajeAletorio(): 
     return random.randint(0,150)
