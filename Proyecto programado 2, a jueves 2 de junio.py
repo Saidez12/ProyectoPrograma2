@@ -32,6 +32,7 @@ entCantidadEquipos.place(x=190, y=25)
 btnEliminarEquipo= tk.Button(
     cantidadEquiposVentana, text="ELIMINAR EQUIPO", bg="#926359", fg="#FFFFFF")
 
+
 # DICCIONARIO DE ALMACENAMIENTO
 estadoActual = {
 "indice" : -1,
@@ -75,6 +76,22 @@ def ingresoEquipos (event):
     lblValorPlanilla = tk.Label(
         infoEquiposVentana, text="Indique el valor de la planilla: ")
     
+    def agregarEquipo(event):
+        indice  = estadoActual["indice"]
+        indice+=1
+        estadoActual["indice"] = indice
+        if(indice < cantidadEquipos):
+            obtenerYGuardar()
+            if(indice == cantidadEquipos-1):
+                intermedio()
+        else:
+            intermedio()
+        
+    def editarEquipo(event):
+        almacenarModificaciones()
+        infoEquiposVentana.withdraw()
+        messagebox.showinfo(message="Se han realizado los cambios")
+        
     lblNombreEquipo.place(x=10, y=25)
     entNombreEquipo.place(x=330, y=25)
     lblLugarProcedencia.place(x=10, y=50)
@@ -88,35 +105,6 @@ def ingresoEquipos (event):
     btnContinuarIngreso.place(x=175, y=175)
     btnContinuarIngreso.unbind("<Button-1>")
     equipoActual  = estadoActual["equipoActual"]
-    if(equipoActual == NULL):
-        try:
-            cantidadEquipos = int(entCantidadEquipos.get())
-        except:
-            messagebox.showinfo(message="Debe indicar un valor numérico de índole entero")
-        equipos = {}
-        estadoActual["equipos"] = equipos
-        cantidadEquiposVentana.withdraw()
-        btnContinuarIngreso.bind("<Button-1>", agregarEquipo)
-    else:
-        entNombreEquipo.insert(0, equipoActual["Nombre del equipo"])
-        entValorPlanilla.insert(0, equipoActual["Valor de la planilla"])
-        entLugarProcedencia.insert(0, equipoActual["Lugar de procedencia"])
-        entCantidadJugadores.insert(0, equipoActual["Cantidad de jugadores"])
-        btnContinuarIngreso.bind("<Button-1>", editarEquipo)
-    
-    def agregarEquipo(event):
-        indice  = estadoActual["indice"]
-        indice+=1
-        estadoActual["indice"] = indice
-        if(indice < cantidadEquipos):
-            obtenerYGuardar()
-            if(indice == cantidadEquipos-1):
-                intermedio()
-        else:
-            intermedio()
-            
-    def editarEquipo(event):
-        almacenarModificaciones()
         
 # INICIO DEL PROGRAMA
     if(equipoActual == NULL):
@@ -347,7 +335,7 @@ def ingresoEquipos (event):
             estadoActual["matrizDatos"].get()
             btnEliminarEquipo.bind("<Button-1>", eliminarEquipo)
         except:
-            messagebox.showinfo("Error", message="Consulte la tabla de partidos jugados")
+            messagebox.showinfo("NOTA", message="Consulte la tabla de partidos jugados")
             
     
 
