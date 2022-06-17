@@ -11,7 +11,6 @@ from tkinter import *
 from tkinter import messagebox
 from typing import Any, Hashable,Iterable,Optional
 import random
-import winsound
 import pandas as pd
 import matplotlib.pyplot as plt
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
@@ -248,7 +247,7 @@ def ingresoEquipos (event):
                 else:
                     continue
         btnModificarEquipo.bind("<Button-1>", buscarEquipo)
-        
+
 # ELIMINACIÓN DE EQUIPOS
     def procesarEquipoAEliminar(event):
         try:
