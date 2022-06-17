@@ -303,6 +303,7 @@ def ingresoEquipos (event):
     btnContinuar.bind("<Button-1>", ingresoEquipos)
     btnEliminarEquipo.place(x=25, y=300)
     btnEliminarEquipo.bind("<Button-1>", eliminarEquipo)    
+    
     # LOBBY
     def intermedio():
         winVentana3= tk.Toplevel(infoEquiposVentana)
@@ -318,19 +319,19 @@ def ingresoEquipos (event):
             winVentana3, text="Los equipos se han guardado satisfactoriamente")
         lblEquiposGuardados.place(x=15, y=25)
         btnModificar = tk.Button(
-            winVentana3, text="Modificar un equipo", bg="#926359", fg="#FFFFFF")
+            winVentana3, text="MODIFICAR EQUIPO", bg="#926359", fg="#FFFFFF")
         btnModificar.place(x=25, y=75)
         btnModificar.bind("<Button-1>", modificarDiccionario)
         btnTablaResultados= tk.Button(
-            winVentana3, text="Estadísticas del Campeonato / Simulación de torneo", bg="#926359", fg="#FFFFFF")
+            winVentana3, text="SIMULAR CAMPEONATO", bg="#926359", fg="#FFFFFF")
         btnTablaResultados.place(x=150, y=125)
         btnTablaResultados.bind("<Button-1>", verTablaEstadisticas)
         btnTablaResultados= tk.Button(
-            winVentana3, text="Ver tabla de partidos jugados", bg="#926359", fg="#FFFFFF")
+            winVentana3, text="TABLA RESULTADOS", bg="#926359", fg="#FFFFFF")
         btnTablaResultados.place(x=150, y=75)
         btnTablaResultados.bind("<Button-1>", matrizEquipos)
         btnEliminarEquipo= tk.Button(
-            winVentana3, text="Eliminar Equipo", bg="#926359", fg="#FFFFFF")
+            winVentana3, text="ELIMINAR EQUIPO", bg="#926359", fg="#FFFFFF")
         btnEliminarEquipo.place(x=25, y=125)
         try:
             estadoActual["matrizDatos"].get()
