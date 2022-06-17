@@ -309,7 +309,7 @@ def ingresoEquipos (event):
         winVentana3= tk.Toplevel(infoEquiposVentana)
         winVentana3.resizable(False, False)
         winVentana3.geometry("500x200")
-        winVentana3.title("Modificar un equipo")
+        winVentana3.title("Lobby")
         x = infoEquiposVentana.winfo_x()
         y = infoEquiposVentana.winfo_y()
         winVentana3.geometry("+%d+%d" % (x+75, y+75))
